@@ -75,8 +75,8 @@ namespace BugTracker.Models
 
         public System.Data.Entity.DbSet<BugTracker.Models.TicketAttachment> TicketAttachments { get; set; }
 
-        public System.Data.Entity.DbSet<BugTracker.Models.ApplicationUser> ApplicationUsers { get; set; }
-
+        //public System.Data.Entity.DbSet<BugTracker.Models.ApplicationUser> ApplicationUsers { get; set; }
+        
         public System.Data.Entity.DbSet<BugTracker.Models.TicketComment> TicketComments { get; set; }
 
         public System.Data.Entity.DbSet<BugTracker.Models.TicketHistory> TicketHistories { get; set; }

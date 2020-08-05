@@ -26,12 +26,12 @@ namespace BugTracker.Helpers
                 return user.FullName;
             }
 
-        public string GetAvatarPath()
-        {
-            var userId = HttpContext.Current.User.Identity.GetUserId();
-            var user = db.Users.Find(userId);
-            return user.AvatarPath;
-        }
+        //public string GetAvatarPath()
+        //{
+        //    var userId = HttpContext.Current.User.Identity.GetUserId();
+        //    var user = db.Users.Find(userId);
+        //    return user.AvatarPath;
+        //}
 
         public string GetUserRole()
         {

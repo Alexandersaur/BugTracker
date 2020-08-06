@@ -47,7 +47,10 @@ namespace BugTracker.Controllers
                     roleHelper.AddUserToRole(userId, roleName);
                 }
             }
-            return RedirectToAction("ManageRoles"); 
+            //return RedirectToAction("ManageRoles"); 
+            ViewBag.UserIds = new MultiSelectList(db.Users, "Id", "Email");
+            ViewBag.RoleName = new SelectList(db.Roles, "Name", "Name");
+            return View(db.Users.ToList());
         }
     }
 }

@@ -212,6 +212,8 @@ namespace BugTracker.Controllers
             return View();
         }
 
+        // POST: /Account/ResendEmailConfirmation
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]

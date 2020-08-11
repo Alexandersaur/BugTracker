@@ -32,11 +32,14 @@ namespace BugTracker.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "Name");
+            ViewBag.TicketTypeId = new SelectList(db.TicketTypes, "Id", "Name");
             return View(project);
         }
 
         // GET: Projects/Create
-        [Authorize(Roles ="Admin, ProjectManager")]
+        //[Authorize(Roles ="Admin, ProjectManager")]
+        [Authorize]
         public ActionResult Create()
         {
             return View();

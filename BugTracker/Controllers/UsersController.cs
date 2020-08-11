@@ -8,6 +8,8 @@ using System.Web.Mvc;
 
 namespace BugTracker.Controllers
 {
+    [RequireHttps]
+
     public class UsersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

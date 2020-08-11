@@ -7,7 +7,10 @@ using System.Web;
 using System.Web.Mvc;
 
 namespace BugTracker.Controllers
+
 {
+    [RequireHttps]
+
     public class AssignmentsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

@@ -8,39 +8,31 @@ using System.Web;
 using System.Web.Mvc;
 using BugTracker.Helpers;
 using BugTracker.Models;
+using BugTracker.ViewModels;
 using Microsoft.AspNet.Identity;
 
 namespace BugTracker.Controllers
 {
-    //[Authorize]
+    [RequireHttps]
+    [Authorize]
     public class TicketsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private ProjectHelper projectHelper = new ProjectHelper();
         private UserRoleHelper userRoleHelper = new UserRoleHelper();
+        private TicketHelper ticketHelper = new TicketHelper();
 
         // GET: Tickets
         public ActionResult Index()
         {
-            var userId = User.Identity.GetUserId();
-            var myRole = userRoleHelper.ListUserRoles(userId).FirstOrDefault();
-            List<Ticket> model = new List<Ticket>();
-            switch(myRole)
-            {
-                case "Admin":
-                    model = db.Tickets.ToList();
-                    break;
-                case "Project Manager":
-                case "Developer":
-                    model = projectHelper.ListUserProjects(userId).SelectMany(p => p.Tickets).ToList();
-                    break;
-                case "Submitter":
-                    model = db.Tickets.Where(t => t.SubmitterId == userId).ToList();
-                    break;
-                default: 
-                    return RedirectToAction("Index", "Home");
-            }
-            return View(model);
+            //var myUserId = User.Identity.GetUserId();
+            //Call TicketHelper GetMyTickets method...
+            //var myTickets = ticketHelper.GetMyTickets();
+            //Call MyTicketViewModel
+            var myTicketVM = new MyTicketViewModel();
+            myTicketVM.AllTickets = db.Tickets.ToList();
+            myTicketVM.MyTickets = ticketHelper.GetMyTickets();
+            return View(myTicketVM);
         }
 
         // GET: Tickets/Details/5

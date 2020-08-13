@@ -36,5 +36,60 @@ namespace BugTracker.Helpers
             }
             return tickets;
         }
+        public bool CanMakeComment(int ticketId)
+        {
+            var userId = HttpContext.Current.User.Identity.GetUserId();
+            var myRole = userRoleHelper.ListUserRoles(userId).FirstOrDefault();
+            switch (myRole)
+            {
+                case "Admin":
+                    return true;
+                case "Project Manager":
+                    var user = db.Users.Find(userId);
+                    //var projects = user.Projects;
+                    //var tickets = projects.SelectMany(p => p.Tickets);
+                    //var bool1 = tickets.Any(t => t.Id == ticketId);
+                    return (user.Projects.SelectMany(p => p.Tickets).Any(t => t.Id == ticketId));
+                case "Developer":
+                case "Submitter":
+                    var ticket = db.Tickets.Find(ticketId);
+                    if (ticket.DeveloperId == userId || ticket.SubmitterId == userId)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                default:
+                    return false;
+            }
+        }
+        public bool CanEditTicket(int ticketId)
+        {
+            var userId = HttpContext.Current.User.Identity.GetUserId();
+            var myRole = userRoleHelper.ListUserRoles(userId).FirstOrDefault();
+            switch (myRole)
+            {
+                case "Admin":
+                    return true;
+                case "Project Manager":
+                    var user = db.Users.Find(userId);
+                    return (user.Projects.SelectMany(p => p.Tickets).Any(t => t.Id == ticketId));
+                case "Developer":
+                case "Submitter":
+                    var ticket = db.Tickets.Find(ticketId);
+                    if (ticket.DeveloperId == userId || ticket.SubmitterId == userId)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                default:
+                    return false;
+            }
+        }
     }
 }

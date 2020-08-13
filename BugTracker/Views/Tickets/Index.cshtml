@@ -5,6 +5,11 @@
     ViewBag.Title = "Index";
 }
 
+@*@if(Model.Count() == 0)
+{
+    <h3>You have no tickets to display</h3>
+}*@
+
 <h2>Index</h2>
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -15,98 +20,7 @@
 <hr />
 
 <table class="table">
-    <tr>
-        <th>
-            Project
-        </th>
-        <th>
-            Priority
-        </th>
-        <th>
-            Status
-        </th>
-        <th>
-            Type
-        </th>
-        <th>
-            Submitter
-        </th>
-        <th>
-            Developer
-        </th>
-        <th>
-            Issue
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Created)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Updated)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsResolved)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsArchived)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model.AllTickets)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Project.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TicketPriorityId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TicketStatusId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TicketTypeId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Submitter.FullName)
-            </td>
-            <td>
-                @if (item.DeveloperId != null)
-                {
-                    @Html.DisplayFor(modelItem => item.Developer.FullName)
-                }
-                else
-                {
-                    <span>No Developer Assigned</span>
-                }
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Issue)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Created)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Updated)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsResolved)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsArchived)
-            </td>
-        </tr>
-    }
-
-</table>
-
-@if (Model.MyTickets.Count > 0)
-{
-    <hr />
-    <h2>My Tickets</h2>
-    <hr />
-
-    <table class="table">
+    <thead>
         <tr>
             <th>
                 Project
@@ -130,21 +44,22 @@
                 Issue
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Created)
+                Created
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Updated)
+                Updated
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsResolved)
+                IsResolved
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsArchived)
+                IsArchived
             </th>
             <th></th>
         </tr>
-
-        @foreach (var item in Model.MyTickets)
+    </thead>
+    <tbody>
+        @foreach (var item in Model.AllTickets)
         {
             <tr>
                 <td>
@@ -163,7 +78,14 @@
                     @Html.DisplayFor(modelItem => item.Submitter.FullName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Developer.FullName)
+                    @if (item.DeveloperId != null)
+                    {
+                        @Html.DisplayFor(modelItem => item.Developer.FullName)
+                    }
+                    else
+                    {
+                        <span>No Developer Assigned</span>
+                    }
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Issue)
@@ -182,7 +104,94 @@
                 </td>
             </tr>
         }
+    </tbody>
+</table>
 
+@if (Model.MyTickets.Count > 0)
+{
+    <hr />
+    <h2>My Tickets</h2>
+    <hr />
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Project
+                </th>
+                <th>
+                    Priority
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Type
+                </th>
+                <th>
+                    Submitter
+                </th>
+                <th>
+                    Developer
+                </th>
+                <th>
+                    Issue
+                </th>
+                <th>
+                    Created
+                </th>
+                <th>
+                    Updated
+                </th>
+                <th>
+                    IsResolved
+                </th>
+                <th>
+                    IsArchived
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.MyTickets)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Project.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TicketPriorityId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TicketStatusId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TicketTypeId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Submitter.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Developer.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Issue)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Created)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Updated)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsResolved)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsArchived)
+                    </td>
+                </tr>
+            }
+        </tbody>
     </table>
 }
 else

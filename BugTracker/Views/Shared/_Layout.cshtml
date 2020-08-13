@@ -7,6 +7,8 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
+<link href="~/Content/datatables.min.css" rel="stylesheet" />
+
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -40,5 +42,9 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <script src="~/Scripts/datatables.min.js"></script>
+    <script>
+        $('table.table').DataTable();
+    </script>
 </body>
 </html>

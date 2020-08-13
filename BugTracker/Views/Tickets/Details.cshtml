@@ -1,7 +1,10 @@
 ﻿@model BugTracker.Models.Ticket
+@using BugTracker.Helpers
+@using Microsoft.AspNet.Identity
 
 @{
     ViewBag.Title = "Details";
+    var ticketHelper = new TicketHelper();
 }
 
 <h2>Details</h2>
@@ -108,6 +111,46 @@
 
     </dl>
 </div>
+
+<p>There are @Model.Comments.Count comments on this ticket.</p>
+@*@if (Model.Comments.Count != 0)
+    {
+        <h4>No Comments have been made for this ticket.</h4>
+    }*@
+
+@*@if(User.IsInRole("Admin") ||
+    (User.IsInRole("Developer") && Model.DeveloperId == User.Identity.GetUserId()) ||
+    (User.IsInRole("Submitter") && Model.SubmitterId == User.Identity.GetUserId()) ||
+    (User.IsInRole("Project Manager") && projectHelper.IsUserOnProject(User.Identity.GetUserId(), Model.ProjectId)))*@
+
+@if (ticketHelper.CanMakeComment(Model.Id))
+{
+    using (Html.BeginForm("Create", "TicketComments", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>TicketComment</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.Hidden("TicketId", Model.Id)
+            <div class="form-group">
+                @Html.Label("Comment", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextArea("Comment", new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+}
+
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")

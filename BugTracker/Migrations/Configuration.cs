@@ -4,6 +4,7 @@ namespace BugTracker.Migrations
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
@@ -129,6 +130,42 @@ namespace BugTracker.Migrations
                 );
             #endregion
             context.SaveChanges();
+
+            #region Seed Priority, Status, and Type
+            if (!context.TicketTypes.Any())
+            {
+                context.TicketTypes.AddRange(
+                    new TicketType() { Name = "Defect/Bug", Description = "Reference a defect in a production release of a project" },
+                    new TicketType() { Name = "Documentation Request", Description = "Reference a client request for documentation in a production release of a project" },
+                    new TicketType() { Name = "Training request", Description = "Reference a client request for training in a production release of a project" }
+                    );
+            }
+            if (!context.TicketPriorities.Any())
+            {
+                var priorities = new List<TicketPriority>()
+                {
+                    new TicketPriority() { Name = "Immediate" },
+                    new TicketPriority() { Name = "High" },
+                    new TicketPriority() { Name = "Medium" },
+                    new TicketPriority() { Name = "Low" },
+                    new TicketPriority() { Name = "None" }
+                };
+                context.TicketPriorities.AddRange(priorities);
+            }
+            if (!context.TicketStatuses.Any())
+            {
+                var priorities = new List<TicketStatus>()
+                {
+                    new TicketStatus() { Name = "New" },
+                    new TicketStatus() { Name = "Unassigned" },
+                    new TicketStatus() { Name = "Assigned" },
+                    new TicketStatus() { Name = "In Progress" },
+                    new TicketStatus() { Name = "Done" },
+                    new TicketStatus() { Name = "Archived" }
+                };
+                context.TicketStatuses.AddRange(status);
+            }
+            #endregion
         }
     }
 }

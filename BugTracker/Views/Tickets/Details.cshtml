@@ -6,7 +6,7 @@
     ViewBag.Title = "Details";
     var ticketHelper = new TicketHelper();
 }
-
+#region
 <h2>Details</h2>
 
 <div>
@@ -155,3 +155,43 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+CODE BEFORE 8/14 CLASS
+
+@*Show ticket specific data
+Show some parent project data
+Show ticket comments
+Show ticket attachments*@
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10"></div>
+        @*Show project data*@
+        <p>Project Data</p>
+        <br />
+        <h2>Project name: @Model.Project.Name</h2>
+        <h2>Project created: @Model.Project.Created</h2>
+    </div>
+    <div class="row">
+        <div class="col-md-12"></div>
+        @*Show ticket data*@
+        <p>Ticket Data</p>
+        <br />
+        <h2>Title: @Model.Issue</h2>
+        <h2>Priority: @Model.TicketPriority.Name</h2>
+        <h2>Status: @Model.TicketStatus.Name</h2>
+        <h2>Type: @Model.TicketType.Name</h2>
+    </div>
+    <div class="row">
+        <div class="col-md-6"></div>
+        @*Show ticket comments*@
+        <div class="col-md-6"></div>
+        @*Show ticket attachments*@
+        @*A mechanism for adding a new attachment*@
+        @using(Html.BeginForm("Create", "TicketAttachments", FormMethod.Post, new { enctype = "multipartform-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.Hidden("TicketId", Model.Id)
+            <button type="submit" class="btn btn-primary" style="width:100%">Add Attachment</button>
+        }
+        @*A mechanism for displaying existing attachments*@
+    </div>
+</div>

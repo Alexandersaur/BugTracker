@@ -2,11 +2,16 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
+using BugTracker.Helpers;
 using BugTracker.Models;
+using Microsoft.AspNet.Identity;
 
 namespace BugTracker.Controllers
 {
@@ -51,10 +56,31 @@ namespace BugTracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,TicketId,UserId,FilePath,Description,Created")] TicketAttachment ticketAttachment)
+        public ActionResult Create([Bind(Include = "TicketId,FileName,Description")] TicketAttachment ticketAttachment, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
+                ticketAttachment.Created = DateTime.Now;
+                ticketAttachment.UserId = User.Identity.GetUserId();
+                //Check that there is an incoming file
+                if (file == null)
+                { 
+                    TempData["Error"] = "You must supply a file!";
+                    return RedirectToAction("Dashboard", "Tickets", new { id = ticketAttachment.TicketId });
+                }
+
+                //Step 1: Run the file through the validators, is it of proper size and extention?
+                if(FileUploadValidator.IsWebFriendlyFile(file) || ImageUploadValidator.IsWebFriendlyImage(file))
+                {
+                    //Step 2: Isolate, slugify, and stamp the file name
+                    var fileName = FileStamp.MakeUnique(file.FileName);
+
+                    //Step 3: Assign the FilePath property and save the physical file
+                    var serverFolder = WebConfigurationManager.AppSettings["DefaultServerFolder"];
+                    file.SaveAs(Path.Combine(Server.MapPath(serverFolder), fileName));
+                    TicketAttachment.FilePath = $"{serverFolder}{fileName}";
+                }
+
                 db.TicketAttachments.Add(ticketAttachment);
                 db.SaveChanges();
                 return RedirectToAction("Index");

@@ -187,6 +187,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\FileStamp.cs" />
+    <Compile Include="Helpers\FileUploadValidator.cs" />
     <Compile Include="Helpers\ImageUploadValidator.cs" />
     <Compile Include="Helpers\ProjectHelper.cs" />
     <Compile Include="Helpers\StringUtilities.cs" />
@@ -232,6 +234,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\adminlte.js" />
+    <Content Include="Scripts\adminlte.min.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\datatables.min.js" />

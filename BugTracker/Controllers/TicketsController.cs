@@ -21,6 +21,7 @@ namespace BugTracker.Controllers
         private ProjectHelper projectHelper = new ProjectHelper();
         private UserRoleHelper userRoleHelper = new UserRoleHelper();
         private TicketHelper ticketHelper = new TicketHelper();
+        private HistoryHelper historyHelper = new HistoryHelper();
 
         // GET: Tickets
         public ActionResult Index()
@@ -115,9 +116,13 @@ namespace BugTracker.Controllers
                 return RedirectToAction("Details", "Projects", new { id = ticket.ProjectId });
             }
 
+            ViewBag.DeveloperId = new SelectList(db.Users, "Id", "LastName", ticket.DeveloperId);
             ViewBag.ProjectId = new SelectList(projectHelper.ListUserProjects(userId), "Id", "Name");
-            ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "Name");
-            ViewBag.TicketTypeId = new SelectList(db.TicketTypes, "Id", "Name");
+            ViewBag.SubmitterId = new SelectList(db.Users, "Id", "LastName", ticket.SubmitterId);
+            ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "Name", ticket.TicketPriorityId);
+            ViewBag.TicketStatusId = new SelectList(db.TicketStatuses, "Id", "Name", ticket.TicketStatusId);
+            ViewBag.TicketTypeId = new SelectList(db.TicketTypes, "Id", "Name", ticket.TicketTypeId);
+
             return View(ticket);
         }
 
@@ -133,6 +138,7 @@ namespace BugTracker.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.DeveloperId = new SelectList(db.Users, "Id", "LastName", ticket.DeveloperId);
             ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name", ticket.ProjectId);
             ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "Name");
             ViewBag.TicketStatusId = new SelectList(db.TicketStatuses, "Id", "Name");
@@ -149,10 +155,19 @@ namespace BugTracker.Controllers
         {
             if (ModelState.IsValid)
             {
+                //Memento Object - I need to go out to the DB and grab the Ticket in its current state in order to compare it to the ticket being submitted from the Form
+                //go out and get an unedited copy of the Ticket from the DB
+                var oldTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
                 db.Entry(ticket).State = EntityState.Modified;
                 db.SaveChanges();
+
+                //compare old Ticket with new Ticket to make any future decisions that might be required
+                var newTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
+                ticketHelper.ManageTicketNotifications(oldTicket, newTicket);
+                historyHelper.ManageHistories(oldTicket, newTicket);
                 return RedirectToAction("Index");
             }
+            ViewBag.DeveloperId = new SelectList(db.Users, "Id", "LastName", ticket.DeveloperId);
             ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name", ticket.ProjectId);
             ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "Name");
             ViewBag.TicketStatusId = new SelectList(db.TicketStatuses, "Id", "Name");

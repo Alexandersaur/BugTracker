@@ -100,6 +100,15 @@
             <!-- /.login-card-body -->
         </div>
     </div>
+    <center><i class="fas fa-puzzle-piece fa-3x"></i></center>
+    @using(Html.BeginForm("DemoLoginAsync", "Account", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken();
+        @Html.Hidden("emailKey", "DemoDev3Email")
+        <div>
+            <button type="submit" class="btn btn-success btn-block btn-flat">Login</button>
+        </div>
+    }
     <!-- /.login-box -->
     <!-- jQuery -->
     <script src="~/Scripts/jquery.min.js"></script>

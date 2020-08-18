@@ -91,5 +91,51 @@ namespace BugTracker.Helpers
                     return false;
             }
         }
+        public void ManageTicketNotifications(Ticket oldTicket, Ticket newTicket)
+        {
+            //Scenario 1: a new assignment - oldTicket.DeveloperId = null, and new Ticket.DeveloperId is not null
+            if (oldTicket.DeveloperId != newTicket.DeveloperId && newTicket.DeveloperId != null)
+            {
+                //I have determined that this change needs a notification and I need to create a new TicketNotification record
+                var newNotification = new TicketNotification()
+                {
+                    TicketId = newTicket.Id,
+                    UserId = newTicket.DeveloperId,
+                    Created = DateTime.Now,
+                    Subject = $"You have been assigned to Ticket Id: {newTicket.Id}",
+                    Message = $"Heads up {newTicket.Developer.FullName}, you have been assigned to Ticket Id {newTicket.Id} with the following issue: '{newTicket.Issue}', on Project '{newTicket.Project.Name}'"
+                };
+            db.TicketNotifications.Add(newNotification);
+            db.SaveChanges();
+            }
+            //Scenario 2: an unassignment - oldTicket.DeveloperId was not null, and new Ticket.DeveloperId is null
+            if (oldTicket.DeveloperId != newTicket.DeveloperId && oldTicket.DeveloperId != null)
+            {
+                var oldNotification = new TicketNotification()
+                {
+                    TicketId = oldTicket.Id,
+                    UserId = oldTicket.DeveloperId,
+                    Created = DateTime.Now,
+                    Subject = $"You have been removed from Ticket Id: {oldTicket.Id}",
+                    Message = $"Heads up {oldTicket.Developer.FullName}, you have been removed from Ticket Id {oldTicket.Id} with the following issue: '{oldTicket.Issue}', on Project '{oldTicket.Project.Name}'"
+                };
+                db.TicketNotifications.Add(oldNotification);
+                db.SaveChanges();
+            }
+            //Scenario 3: a reassignment - neither old nor new ticket.DeveloperId is null, and they dont match (this could create two notifactions, one for the new user and one for the old user)
+            if (oldTicket.DeveloperId != newTicket.DeveloperId && oldTicket.DeveloperId != null && newTicket.DeveloperId != null)
+            {
+                //var oldNotification = new TicketNotification()
+                //{
+                //    TicketId = oldTicket.Id,
+                //    UserId = oldTicket.DeveloperId,
+                //    Created = DateTime.Now,
+                //    Subject = $"You have been removed from Ticket Id: {oldTicket.Id}",
+                //    Message = $"Heads up {oldTicket.Developer.FullName}, you have been removed from Ticket Id {oldTicket.Id} with the following issue: '{oldTicket.Issue}', on Project '{oldTicket.Project.Name}'"
+                //};
+                //db.TicketNotifications.Add(oldNotification);
+                //db.SaveChanges();
+            }
+        }
     }
 }

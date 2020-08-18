@@ -12,7 +12,6 @@ namespace BugTracker.Models
         #region Parents/Children Relationships
         public int TicketId { get; set; }
         public virtual Ticket Ticket { get; set; }
-
         public string UserId { get; set; }
         public virtual ApplicationUser User { get; set; }
         #endregion
@@ -21,6 +20,8 @@ namespace BugTracker.Models
         public string Message { get; set; }
         public DateTime Created { get; set; }
         public bool IsRead { get; set; }
+        public string Subject { get; set; }
+        public string Body { get; set; }
         #endregion
     }
 }

@@ -12,13 +12,12 @@ namespace BugTracker.Models
         #region Parents/Children Relationships
         public int TicketId { get; set; }
         public virtual Ticket Ticket { get; set; }
-
         public string UserId { get; set; }
         public virtual ApplicationUser User { get; set; }
         #endregion
 
         #region Actual Properties
-        //The property of the ticket that was change (Status, Type, Attachment added, etc.)
+        //The property of the ticket that was changed (Status, Type, Attachment added, etc.)
         public string Property { get; set; }
         //What the property was originally set to
         public string OldValue { get; set; }

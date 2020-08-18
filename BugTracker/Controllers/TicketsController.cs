@@ -163,8 +163,7 @@ namespace BugTracker.Controllers
 
                 //compare old Ticket with new Ticket to make any future decisions that might be required
                 var newTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
-                ticketHelper.ManageTicketNotifications(oldTicket, newTicket);
-                historyHelper.ManageHistories(oldTicket, newTicket);
+                ticketHelper.EditedTicket(oldTicket, newTicket);
                 return RedirectToAction("Index");
             }
             ViewBag.DeveloperId = new SelectList(db.Users, "Id", "LastName", ticket.DeveloperId);

@@ -1,5 +1,7 @@
-﻿ @using BugTracker.Helpers
+﻿@using BugTracker.Helpers
+@using Microsoft.AspNet.Identity
 @{ 
+    ViewBag.Title = "Home Page";
     var userHelper = new UserHelper();
 }
     
@@ -30,7 +32,14 @@
                     <div class="small-box bg-info">
                         <div class="inner">
                             <h3>@userHelper.GetAvatarPath</h3>
-
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <h2>Hello @userHelper.LastNameFirst(User.Identity.GetUserId())</h2>
+                            }
+                            else
+                            {
+                                <h2>PLEASE LOGIN</h2>
+                            }
                             <p>New Orders</p>
                         </div>
                         <div class="icon">

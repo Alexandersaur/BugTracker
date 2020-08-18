@@ -16,6 +16,8 @@ namespace BugTracker.Helpers
             PriorityUpdate(oldTicket, newTicket);
             StatusUpdate(oldTicket, newTicket);
             TypeUpdate(oldTicket, newTicket);
+            IssueUpdate(oldTicket, newTicket);
+            DescriptionUpdate(oldTicket, newTicket);
             db.SaveChanges();
         }
         public void DeveloperUpdate(Ticket oldTicket, Ticket newTicket) 
@@ -77,6 +79,38 @@ namespace BugTracker.Helpers
                     Property = "Type",
                     OldValue = oldTicket.TicketType.Name,
                     NewValue = newTicket.TicketType.Name,
+                    ChangedOn = DateTime.Now
+                };
+                db.TicketHistories.Add(history);
+            }
+        }
+        private void IssueUpdate(Ticket oldTicket, Ticket newTicket)
+        {
+            if (oldTicket.TicketTypeId != newTicket.TicketTypeId)
+            {
+                var history = new TicketHistory()
+                {
+                    TicketId = newTicket.Id,
+                    UserId = HttpContext.Current.User.Identity.GetUserId(),
+                    Property = "Issue",
+                    OldValue = oldTicket.Issue,
+                    NewValue = newTicket.Issue,
+                    ChangedOn = DateTime.Now
+                };
+                db.TicketHistories.Add(history);
+            }
+        }
+        private void DescriptionUpdate(Ticket oldTicket, Ticket newTicket)
+        {
+            if (oldTicket.TicketTypeId != newTicket.TicketTypeId)
+            {
+                var history = new TicketHistory()
+                {
+                    TicketId = newTicket.Id,
+                    UserId = HttpContext.Current.User.Identity.GetUserId(),
+                    Property = "Description",
+                    OldValue = oldTicket.IssueDescription,
+                    NewValue = newTicket.IssueDescription,
                     ChangedOn = DateTime.Now
                 };
                 db.TicketHistories.Add(history);

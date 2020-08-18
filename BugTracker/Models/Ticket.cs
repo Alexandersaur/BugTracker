@@ -18,23 +18,14 @@ namespace BugTracker.Models
         public virtual TicketStatus TicketStatus { get; set; }
         public int TicketTypeId { get; set; }
         public virtual TicketType TicketType { get; set; }
-        public string SubmitterId { get; set; }
+        public string SubmitterId { get; set; }        
+        //public virtual ApplicationUser Submitter { get; set; }
         public string DeveloperId { get; set; }
-        public virtual ApplicationUser Submitter { get; set; }
-        public virtual ApplicationUser Developer { get; set; }
+        //public virtual ApplicationUser Developer { get; set; }
         public virtual ICollection<TicketAttachment> Attachments { get; set; }
         public virtual ICollection<TicketComment> Comments { get; set; }
         public virtual ICollection<TicketHistory> Histories { get; set; }
         public virtual ICollection<TicketNotification> Notifications { get; set; }
-        #endregion
-
-        #region Actual Properties
-        public string Issue { get; set; }
-        public string IssueDescription { get; set; }
-        public DateTime Created { get; set; }
-        public DateTime? Updated { get; set; }
-        public bool IsResolved { get; set; }
-        public bool IsArchived { get; set; }
         #endregion
 
         #region Constructor
@@ -46,5 +37,15 @@ namespace BugTracker.Models
             Notifications = new HashSet<TicketNotification>();
         }
         #endregion
+
+        #region Actual Properties
+        public string Issue { get; set; }
+        public string IssueDescription { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime? Updated { get; set; }
+        public bool IsResolved { get; set; }
+        public bool IsArchived { get; set; }
+        #endregion
+
     }
 }

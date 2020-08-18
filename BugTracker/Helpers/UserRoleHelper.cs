@@ -15,7 +15,17 @@ namespace BugTracker.Helpers
         ApplicationDbContext()));
 
         private ApplicationDbContext db = new ApplicationDbContext();
-
+        public string GetUserRole()
+        {
+            var userId = HttpContext.Current.User.Identity.GetUserId();
+            var user = db.Users.Find(userId);
+            var roleId = user.Roles.Where(u => u.UserId == userId);
+            return null;
+        }
+        public string GetUserRole(string userId)
+        {
+            return null;
+        }
         public bool IsUserInRole(String userId, string roleName)
         {
             return userManager.IsInRole(userId, roleName);

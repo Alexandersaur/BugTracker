@@ -11,6 +11,7 @@ namespace BugTracker.Helpers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private UserRoleHelper userRoleHelper = new UserRoleHelper();
+        private HistoryHelper historyHelper = new HistoryHelper();
 
         public List<Ticket> GetMyTickets()
         {
@@ -136,6 +137,11 @@ namespace BugTracker.Helpers
                 //db.TicketNotifications.Add(oldNotification);
                 //db.SaveChanges();
             }
+        }
+        public void EditedTicket(Ticket oldTicket, Ticket newTicket)
+        {
+            historyHelper.ManageHistories(oldTicket, newTicket);
+            ManageTicketNotifications(oldTicket, newTicket);
         }
     }
 }

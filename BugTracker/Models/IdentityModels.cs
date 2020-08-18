@@ -12,11 +12,22 @@ namespace BugTracker.Models
     public class ApplicationUser : IdentityUser
     {
         #region Parents/Children Relationships
-        public ICollection<Project> Projects { get; set; }
-        public ICollection<TicketAttachment> Attachments { get; set; }
-        public ICollection<TicketComment> Comments { get; set; }
-        public ICollection<TicketHistory> Histories { get; set; }
-        public ICollection<TicketNotification> Notifications { get; set; }
+        public virtual ICollection<Project> Projects { get; set; }
+        public virtual ICollection<TicketAttachment> Attachments { get; set; }
+        public virtual ICollection<TicketComment> Comments { get; set; }
+        public virtual ICollection<TicketHistory> Histories { get; set; }
+        public virtual ICollection<TicketNotification> Notifications { get; set; }
+        #endregion
+
+        #region Constructor
+        public ApplicationUser()
+        {
+            Projects = new HashSet<Project>();
+            Attachments = new HashSet<TicketAttachment>();
+            Histories = new HashSet<TicketHistory>();
+            Notifications = new HashSet<TicketNotification>();
+            Comments = new HashSet<TicketComment>();
+        }
         #endregion
 
         #region Actual Properties
@@ -30,17 +41,6 @@ namespace BugTracker.Models
             {
                 return $"{FirstName} {LastName}";
             }
-        }
-        #endregion
-
-        #region Constructor
-        public ApplicationUser()
-        {
-            Projects = new HashSet<Project>();
-            Attachments = new HashSet<TicketAttachment>();
-            Histories = new HashSet<TicketHistory>();
-            Notifications = new HashSet<TicketNotification>();
-            Comments = new HashSet<TicketComment>();
         }
         #endregion
 
@@ -71,9 +71,10 @@ namespace BugTracker.Models
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<TicketAttachment> TicketAttachments { get; set; }
-        //public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<TicketComment> TicketComments { get; set; }
         public DbSet<TicketHistory> TicketHistories { get; set; }
-        public DbSet<TicketNotification> TicketNotifications { get; set; }
+        public DbSet<TicketNotification> TicketNotifications { get; set; }        
+        //public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
     }
 }

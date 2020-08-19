@@ -26,7 +26,7 @@ namespace BugTracker.Helpers
         {
             return null;
         }
-        public bool IsUserInRole(String userId, string roleName)
+        public bool IsUserInRole(string userId, string roleName)
         {
             return userManager.IsInRole(userId, roleName);
         }

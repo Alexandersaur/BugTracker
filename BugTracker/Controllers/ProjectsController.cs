@@ -40,8 +40,7 @@ namespace BugTracker.Controllers
         }
 
         // GET: Projects/Create
-        //[Authorize(Roles ="Admin, ProjectManager")]
-        [Authorize]
+        [Authorize(Roles ="Admin, ProjectManager")]
         public ActionResult Create()
         {
             return View();
@@ -56,6 +55,7 @@ namespace BugTracker.Controllers
         {
             if (ModelState.IsValid)
             {
+                project.Created = DateTime.Now;
                 db.Projects.Add(project);
                 db.SaveChanges();
                 return RedirectToAction("Index");

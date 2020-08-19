@@ -19,9 +19,9 @@ namespace BugTracker.Models
         public int TicketTypeId { get; set; }
         public virtual TicketType TicketType { get; set; }
         public string SubmitterId { get; set; }        
-        //public virtual ApplicationUser Submitter { get; set; }
+        public virtual ApplicationUser Submitter { get; set; }
         public string DeveloperId { get; set; }
-        //public virtual ApplicationUser Developer { get; set; }
+        public virtual ApplicationUser Developer { get; set; }
         public virtual ICollection<TicketAttachment> Attachments { get; set; }
         public virtual ICollection<TicketComment> Comments { get; set; }
         public virtual ICollection<TicketHistory> Histories { get; set; }

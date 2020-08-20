@@ -108,7 +108,6 @@ namespace BugTracker.Migrations
             context.TicketTypes.AddOrUpdate(
                 tt => tt.Name,
                 new TicketType() { Name = "Software" },
-                new TicketType() { Name = "Hardware" },
                 new TicketType() { Name = "UI" },
                 new TicketType() { Name = "Defect" },
                 new TicketType() { Name = "Feature Request" },

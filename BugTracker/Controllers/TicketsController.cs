@@ -14,7 +14,7 @@ using Microsoft.AspNet.Identity;
 namespace BugTracker.Controllers
 {
     [RequireHttps]
-    [Authorize]
+    //[Authorize]
     public class TicketsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -101,13 +101,13 @@ namespace BugTracker.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[Authorize]
-        public ActionResult Create([Bind(Include = "Id,ProjectId,TicketPriorityId,TicketTypeId,Issue,IssueDescription,IsResolved,IsArchived")] Ticket ticket)
+        public ActionResult Create([Bind(Include = "Id,ProjectId,TicketPriorityId,TicketTypeId,Issue,IssueDescription")] Ticket ticket)
         {
             var userId = User.Identity.GetUserId();
             if (ModelState.IsValid)
             {
                 //Add back in: Created, SubmitterId
-                //Set: DeveloperId to null, IsArchived and IsResolved will be false
+                //Set: DeveloperId to null by default, IsArchived and IsResolved will be false by default
                 ticket.TicketStatusId = db.TicketStatuses.Where(ts => ts.Name == "Open").FirstOrDefault().Id;
                 ticket.Created = DateTime.Now;
                 ticket.SubmitterId = userId;

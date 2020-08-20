@@ -1,7 +1,8 @@
 ﻿@model IEnumerable<BugTracker.Models.ApplicationUser>
+@using BugTracker.Utilities
 @{
     ViewBag.Title = "ManageProjectUsers";
-    var projHelper = new BugTracker.Utilities.ProjectHelper();
+    var projHelper = new ProjectHelper();
 }
 
 <style>
@@ -10,7 +11,7 @@
     }
 </style>
 
-<h2>ManageProjectUsers</h2>
+<h2>Manage Project Users</h2>
 
 @using (Html.BeginForm())
 {
@@ -40,7 +41,7 @@
             @Html.DisplayNameFor(model => model.Email)
         </th>
         <th>
-            @Html.DisplayName()
+            @Html.DisplayName("Projects")
         </th>
     </tr>
 
@@ -53,7 +54,7 @@
             <td>
                 @foreach(var project in projHelper.ListUserProjects(user.Id))
                 {
-                    @project.Name <br />
+                    @project.Name() <br />
                 }
             </td>
         </tr>

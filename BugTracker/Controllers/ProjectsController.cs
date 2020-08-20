@@ -40,7 +40,8 @@ namespace BugTracker.Controllers
         }
 
         // GET: Projects/Create
-        [Authorize(Roles ="Admin, ProjectManager")]
+        //[Authorize(Roles = "Admin, ProjectManager")]
+        [Authorize]
         public ActionResult Create()
         {
             return View();

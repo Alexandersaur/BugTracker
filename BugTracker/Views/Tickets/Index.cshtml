@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNet.Identity;
 @model BugTracker.ViewModels.MyTicketViewModel
+@*@model IEnumerable<BugTracker.Models.Ticket>*@
 
 @{
     ViewBag.Title = "Index";
@@ -11,9 +12,12 @@
 }*@
 
 <h2>Index</h2>
+@*@if (User.IsInRole("Submitter"))*@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
+
 
 <hr />
 <h2>All Tickets</h2>

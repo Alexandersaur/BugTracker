@@ -20,7 +20,7 @@ namespace BugTracker.Controllers
         #region Role Assignments
         public ActionResult ManageRoles()
         {
-            //use my ViewBag to hold a MultiSelectList of User in the system
+            //use my ViewBag to hold a MultiSelectList of Users in the system
             //new MultiSelectList(the data, the data's primary key / "Id" which is transmitted, what property are we showing the user)
             ViewBag.UserIds = new MultiSelectList(db.Users, "Id", "Email");
             //use ViewBag to hold a SelectList of Roles
@@ -72,10 +72,10 @@ namespace BugTracker.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ManageProjectUsers(List<string>userIds, List<int> projectIds)
         {
-            //Case 1: No users and no projects
+            //Case 1: No users and no projects were selected
+            //ADD ERROR MESSAGE
             if(userIds == null || projectIds == null)
             {
-
                 return RedirectToAction("ManageProjectUsers");
             }
             //Case 2: Iterate over each user and add them to each of the projects
@@ -87,11 +87,8 @@ namespace BugTracker.Controllers
                     projectHelper.AddUserToProject(userId, projectId);
                 }
             }
-
             return RedirectToAction("ManageProjectUsers");
-
         }
         #endregion
-
     }
 }

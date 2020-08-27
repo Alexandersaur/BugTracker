@@ -11,6 +11,8 @@ using Microsoft.Owin.Security;
 using BugTracker.Models;
 using System.Net.Mail;
 using System.Web.Configuration;
+using System.IO;
+using BugTracker.Helpers;
 
 namespace BugTracker.Controllers
 {
@@ -94,26 +96,26 @@ namespace BugTracker.Controllers
             }
         }
 
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DemoLoginAsync(string emailKey, string returnUrl)
-        {
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var email = WebConfigurationManager.AppSettings(emailKey);
-            var password = WebConfigurationManager.AppSettings("DemoPassword");
-            var result = await SignInManager.PasswordSignInAsync(email, password, false, shouldLockout: false);
-            switch (result)
-            {
-                case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
-                    return View();
-            }
-        }
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> DemoLoginAsync(string emailKey, string returnUrl)
+        //{
+        //    This doesn't count login failures towards account lockout
+        //     To enable password failures to trigger account lockout, change to shouldLockout: true
+        //    var email = WebConfigurationManager.AppSettings(emailKey);
+        //    var password = WebConfigurationManager.AppSettings("DemoPassword");
+        //    var result = await SignInManager.PasswordSignInAsync(email, password, false, shouldLockout: false);
+        //    switch (result)
+        //    {
+        //        case SignInStatus.Success:
+        //            return RedirectToLocal(returnUrl);
+        //        case SignInStatus.Failure:
+        //        default:
+        //            ModelState.AddModelError("", "Invalid login attempt.");
+        //            return View();
+        //    }
+        //}
 
         //
         // GET: /Account/VerifyCode
@@ -171,11 +173,31 @@ namespace BugTracker.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(ExtendedRegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                //Build my default user with the default avatar in case they dont choose one
+                var user = new ApplicationUser 
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    UserName = model.Email, 
+                    Email = model.Email,
+                    AvatarPath = "/Images/default_avatar.png"
+                };
+                //if the user chooses a custom avatar, I will overwrite the defaults
+                if(model.Avatar != null)
+                {
+                    if (FileUploadValidator.IsWebFriendlyImage(model.Avatar))
+                    {
+                        var fileName = FileStamp.MakeUnique(model.Avatar.FileName);
+                        var serverFolder = WebConfigurationManager.AppSettings["DefaultServerFolder"];
+                        model.Avatar.SaveAs(Path.Combine(Server.MapPath("serverFolder"), fileName));
+                        user.AvatarPath = $"{serverFolder}{fileName}";
+                    }
+                }
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -448,7 +470,7 @@ namespace BugTracker.Controllers
                     // If the user does not have an account, then prompt the user to create an account
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
+                    return View("ExternalLoginConfirmation", new ExtendedExternalLoginConfirmationViewModel { Email = loginInfo.Email });
             }
         }
 
@@ -457,7 +479,7 @@ namespace BugTracker.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
+        public async Task<ActionResult> ExternalLoginConfirmation(ExtendedExternalLoginConfirmationViewModel model, string returnUrl)
         {
             if (User.Identity.IsAuthenticated)
             {
@@ -472,7 +494,14 @@ namespace BugTracker.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser 
+                { 
+                    UserName = model.Email, 
+                    Email = model.Email, 
+                    FirstName = model.FirstName, 
+                    LastName = model.LastName, 
+                    AvatarPath = WebConfigurationManager.AppSettings["DefaultAvatarPath"]
+                };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

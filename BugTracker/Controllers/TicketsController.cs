@@ -66,7 +66,7 @@ namespace BugTracker.Controllers
         }
 
         // GET: Tickets/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Dashboard(int? id)
         {
             if (id == null)
             {
@@ -101,7 +101,7 @@ namespace BugTracker.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[Authorize]
-        public ActionResult Create([Bind(Include = "Id,ProjectId,TicketPriorityId,TicketTypeId,Issue,IssueDescription")] Ticket ticket)
+        public ActionResult Create([Bind(Include = "Id,ProjectId,TicketPriorityId,TicketTypeId,Issue,IssueDescription")] Ticket ticket, bool onPage)
         {
             var userId = User.Identity.GetUserId();
             if (ModelState.IsValid)
@@ -113,7 +113,14 @@ namespace BugTracker.Controllers
                 ticket.SubmitterId = userId;
                 db.Tickets.Add(ticket);
                 db.SaveChanges();
-                return RedirectToAction("Details", "Projects", new { id = ticket.ProjectId });
+                if (onPage)
+                {
+                    return RedirectToAction("Details", "Projects", new { id = ticket.ProjectId });
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
 
             ViewBag.DeveloperId = new SelectList(db.Users, "Id", "LastName", ticket.DeveloperId);
@@ -141,7 +148,7 @@ namespace BugTracker.Controllers
             ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name", ticket.ProjectId);
             ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "Name");
             ViewBag.TicketStatusId = new SelectList(db.TicketStatuses, "Id", "Name");
-            ViewBag.TicketTypeId = new SelectList(db.TicketTypes, "Id", "Name");
+            ViewBag.TicketTypeId = new SelectList(db.TicketTypes, "Id", "Name"); 
             return View(ticket);
         }
 

@@ -52,6 +52,8 @@ namespace BugTracker.Controllers
                     roleHelper.AddUserToRole(userId, roleName);
                 }
             }
+            TempData["Message"] = "Role has been successfully updated";
+            //SweetAlert might require RedirectToAction("ManageRoles")
             //return RedirectToAction("ManageRoles"); 
             ViewBag.UserIds = new MultiSelectList(db.Users, "Id", "Email");
             ViewBag.RoleName = new SelectList(db.Roles, "Name", "Name");

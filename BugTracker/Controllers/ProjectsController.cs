@@ -43,7 +43,7 @@ namespace BugTracker.Controllers
         //[Authorize(Roles = "Admin, ProjectManager")]
         [Authorize]
         public ActionResult Create()
-        {
+        {  
             return View();
         }
 

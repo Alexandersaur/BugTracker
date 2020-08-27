@@ -70,7 +70,7 @@ namespace BugTracker.Controllers
                 }
 
                 //Step 1: Run the file through the validators, is it of proper size and extention?
-                if(FileUploadValidator.IsWebFriendlyFile(file) || ImageUploadValidator.IsWebFriendlyImage(file))
+                if(FileUploadValidator.IsWebFriendlyFile(file) || FileUploadValidator.IsWebFriendlyImage(file))
                 {
                     //Step 2: Isolate, slugify, and stamp the file name
                     var fileName = FileStamp.MakeUnique(file.FileName);
@@ -78,17 +78,16 @@ namespace BugTracker.Controllers
                     //Step 3: Assign the FilePath property and save the physical file
                     var serverFolder = WebConfigurationManager.AppSettings["DefaultServerFolder"];
                     file.SaveAs(Path.Combine(Server.MapPath(serverFolder), fileName));
-                    TicketAttachment.FilePath = $"{serverFolder}{fileName}";
+                    ticketAttachment.FilePath = $"{serverFolder}{fileName}";
                 }
 
                 db.TicketAttachments.Add(ticketAttachment);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Dashboard", "Tickets", new { id = ticketAttachment.TicketId });
             }
 
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "SubmitterId", ticketAttachment.TicketId);
-            ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", ticketAttachment.UserId);
-            return View(ticketAttachment);
+            TempData["Error"] = "The model was invalid";
+            return RedirectToAction("Dashboard", "Tickets", new { id = ticketAttachment.TicketId });
         }
 
         // GET: TicketAttachments/Edit/5

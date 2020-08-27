@@ -53,3 +53,18 @@
         </tr>
     }
     </table>
+
+@section scripts {
+    <script>
+        var message = @TempData["Message"];
+        if (message != '')
+        {
+            Swal.fire(
+                'Role Change Detected',
+                message,
+                'success'
+            )
+        }
+    </script>
+
+    }

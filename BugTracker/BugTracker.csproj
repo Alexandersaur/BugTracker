@@ -362,6 +362,7 @@
     <Content Include="fonts\fa-solid-900.woff2" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\JSBugTracker - Web Deploy.pubxml" />
+    <Content Include="Views\Account\DemoLogin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202008101647510_SeedTest.resx">

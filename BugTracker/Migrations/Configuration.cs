@@ -1,5 +1,6 @@
 namespace BugTracker.Migrations
 {
+    using BugTracker.Helpers;
     using BugTracker.Models;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
@@ -8,9 +9,12 @@ namespace BugTracker.Migrations
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using System.Web.Configuration;
 
     internal sealed class Configuration : DbMigrationsConfiguration<BugTracker.Models.ApplicationDbContext>
     {
+        private ProjectHelper projectHelper = new ProjectHelper();
+
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
@@ -45,8 +49,8 @@ namespace BugTracker.Migrations
             }
             //writes some code that creates a user
 
-            var userManager = new UserManager<ApplicationUser>(
-                new UserStore<ApplicationUser>(context));
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            var demoPassword = WebConfigurationManager.AppSettings["DemoPassword"];
 
             //now i need to go out and look for the presence of a user with a specific email
             // if and only if it is not found will i create a user with that email
@@ -60,6 +64,7 @@ namespace BugTracker.Migrations
                     UserName = "jeremy.a.steward@gmail.com",
                     FirstName = "Jeremy",
                     LastName = "Steward",
+                    AvatarPath = "/Images/default_avatar.png"
                 }, "Abc&123!");
 
                 userManager.Create(new ApplicationUser()
@@ -68,6 +73,7 @@ namespace BugTracker.Migrations
                     UserName = "jasontwichell@coderfoundry.com",
                     FirstName = "Jason",
                     LastName = "Twichell",
+                    AvatarPath = "/Images/default_avatar.png"
                 }, "Abc&123!");
 
                 userManager.Create(new ApplicationUser()
@@ -76,6 +82,7 @@ namespace BugTracker.Migrations
                     UserName = "andrewrussell@coderfoundry.com",
                     FirstName = "Andrew",
                     LastName = "Russell",
+                    AvatarPath = "/Images/default_avatar.png"
                 }, "Abc&123!");
 
                 userManager.Create(new ApplicationUser()
@@ -84,7 +91,89 @@ namespace BugTracker.Migrations
                     UserName = "alexandersaur@icloud.com",
                     FirstName = "Alex",
                     LastName = "Ander",
-                }, "Abc&123!");
+                    AvatarPath = "/Images/default_avatar.png"
+                }, "Abc&123!"); 
+                
+                userManager.Create(new ApplicationUser()
+                {
+                    Email = "DemoAdminJS@mailinator.com",
+                    UserName = "DemoAdminJS@mailinator.com",
+                    FirstName = "Demo",
+                    LastName = "Admin",
+                    AvatarPath = "/Images/default_avatar.png"
+                }, "DemoPassword");
+
+                userManager.Create(new ApplicationUser()
+                {
+                    Email = "DemoProjectManagerJS@mailinator.com",
+                    UserName = "DemoProjectManagerJS@mailinator.com",
+                    FirstName = "Demo",
+                    LastName = "ProjectManager",
+                    AvatarPath = "/Images/default_avatar.png"
+                }, "DemoPassword"); 
+                
+                userManager.Create(new ApplicationUser()
+                {
+                    Email = "DemoProjectManagerJSTwo@mailinator.com",
+                    UserName = "DemoProjectManagerJSTwo@mailinator.com",
+                    FirstName = "Demo",
+                    LastName = "ProjectManagerTwo",
+                    AvatarPath = "/Images/default_avatar.png"
+                }, "DemoPassword");
+
+                userManager.Create(new ApplicationUser()
+                {
+                    Email = "DemoDeveloperJS@mailinator.com",
+                    UserName = "DemoDeveloperJS@mailinator.com",
+                    FirstName = "Demo",
+                    LastName = "Developer",
+                    AvatarPath = "/Images/default_avatar.png"
+                }, "DemoPassword");
+
+                userManager.Create(new ApplicationUser()
+                {
+                    Email = "DemoDeveloperJSTwo@mailinator.com",
+                    UserName = "DemoDeveloperJSTwo@mailinator.com",
+                    FirstName = "Demo",
+                    LastName = "DeveloperTwo",
+                    AvatarPath = "/Images/default_avatar.png"
+                }, "DemoPassword");
+
+                userManager.Create(new ApplicationUser()
+                {
+                    Email = "DemoDeveloperJSThree@mailinator.com",
+                    UserName = "DemoDeveloperJSThree@mailinator.com",
+                    FirstName = "Demo",
+                    LastName = "DeveloperThree",
+                    AvatarPath = "/Images/default_avatar.png"
+                }, "DemoPassword");
+
+                userManager.Create(new ApplicationUser()
+                {
+                    Email = "DemoSubmitterJS@mailinator.com",
+                    UserName = "DemoSubmitterJS@mailinator.com",
+                    FirstName = "Demo",
+                    LastName = "Submitter",
+                    AvatarPath = "/Images/default_avatar.png"
+                }, "DemoPassword");
+
+                userManager.Create(new ApplicationUser()
+                {
+                    Email = "DemoSubmitterJSTwo@mailinator.com",
+                    UserName = "DemoSubmitterJSTwo@mailinator.com",
+                    FirstName = "Demo",
+                    LastName = "SubmitterTwo",
+                    AvatarPath = "/Images/default_avatar.png"
+                }, "DemoPassword");
+
+                userManager.Create(new ApplicationUser()
+                {
+                    Email = "DemoSubmitterJSThree@mailinator.com",
+                    UserName = "DemoSubmitterJSThree@mailinator.com",
+                    FirstName = "Demo",
+                    LastName = "SubmitterThree",
+                    AvatarPath = "/Images/default_avatar.png"
+                }, "DemoPassword");
 
                 //Step 1: Grab the id that was just created by adding the above user
                 var userId = userManager.FindByEmail("jeremy.a.steward@gmail.com").Id;
@@ -98,7 +187,35 @@ namespace BugTracker.Migrations
                 userManager.AddToRole(userId3, "Developer");
 
                 var userId4 = userManager.FindByEmail("alexandersaur@icloud.com").Id;
+                userManager.AddToRole(userId4, "Submitter"); 
+                
+                var DemoAdminJS = userManager.FindByEmail("DemoAdminJS@mailinator.com").Id;
+                userManager.AddToRole(DemoAdminJS, "Admin");
+
+                var DemoProjectManagerJS = userManager.FindByEmail("DemoProjectManagerJS@mailinator.com").Id;
+                userManager.AddToRole(DemoProjectManagerJS, "ProjectManager");
+
+                var DemoProjectManagerJSTwo = userManager.FindByEmail("DemoProjectManagerJSTwo@mailinator.com").Id;
+                userManager.AddToRole(DemoProjectManagerJSTwo, "ProjectManager");
+
+                var DemoDeveloperJS = userManager.FindByEmail("DemoDeveloperJS@mailinator.com").Id;
+                userManager.AddToRole(userId3, "Developer"); 
+                
+                var DemoDeveloperJSTwo = userManager.FindByEmail("DemoDeveloperJSTwo@mailinator.com").Id;
+                userManager.AddToRole(DemoDeveloperJSTwo, "Developer"); 
+                
+                var DemoDeveloperJSThree = userManager.FindByEmail("DemoDeveloperJSThree@mailinator.com").Id;
+                userManager.AddToRole(DemoDeveloperJSThree, "Developer");
+
+                var DemoSubmitterJS = userManager.FindByEmail("DemoSubmitterJS@mailinator.com").Id;
                 userManager.AddToRole(userId4, "Submitter");
+
+                var DemoSubmitterJSTwo = userManager.FindByEmail("DemoSubmitterJSTwo@mailinator.com").Id;
+                userManager.AddToRole(DemoSubmitterJSTwo, "Submitter");
+
+                var DemoSubmitterJSThree = userManager.FindByEmail("DemoSubmitterJSThree@mailinator.com").Id;
+                userManager.AddToRole(DemoSubmitterJSThree, "Submitter");
+
             }
             #endregion
 
@@ -182,6 +299,25 @@ namespace BugTracker.Migrations
             };
                 context.TicketStatuses.AddRange(statuses);
             }
+            #endregion
+
+            context.SaveChanges();
+            var userList = context.Users.ToList();
+            var projectList = context.Projects.ToList();
+            foreach(var project in projectList)
+            {
+                //int count = 1;
+                foreach(var user in userList)
+                {
+                    //if(count % 2 != 0)
+                    //{
+                    projectHelper.AddUserToProject(user.Id, project.Id);
+                    //}
+                }
+                //count++
+            }
+
+            #region Ticket Seed
             #endregion
         }
     }

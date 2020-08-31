@@ -111,154 +111,336 @@
 </div>
 <hr />
 <div class="container-fluid">
+    <h2 class="font-weight-bold colorBlack pt-3" id="ticketDetailsCommentsH2">Comments</h2>
+    <h2 class="font-weight-bold colorBlack pt-3" id="ticketDetailsAttachmentsH2">Attachments</h2>
     <div class="row">
-        <div class="col-6"></div>
-        <div class="col-6"></div>
+        <div class="col-6">
+            @if (Model.Comments.Count != 0)
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Submitter
+                            </th>
+                            <th>
+                                Comment Description
+                            </th>
+                            <th>
+                                Created
+                            </th>
+                            @if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
+                            {
+                                <th></th>
+                            }
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.Comments)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.User.FullName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Comment)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Created)
+                                </td>
+                                @if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
+                                {
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                    </td>
+                                }
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="text-center">
+                    <h4 class="font-weight-bold p-3">No comments to display.</h4>
+                </div>
+            }
+            @if (ticketHelper.CanMakeComment(Model.Id))
+            {
+                using (Html.BeginForm("Create", "TicketComments", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <h4>TicketComment</h4>
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.Hidden("TicketId", Model.Id)
+                        <div class="form-group">
+                            @Html.Label("Comment", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextArea("Comment", new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Create" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <div class="col-6 p-0">
+            @if (ticketHelper.CanMakeComment(Model.Id))
+            {
+                <table class="table">
+                    <thead>
+                        <tr id="ticketAttachmentsTableRowHeading">
+                            <th>
+                                @Html.DisplayName("Icon")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Name")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Description")
+                            </th>
+                            <th>
+                                @Html.DisplayName("File Path")
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var attachment in Model.Attachments.ToList())
+                        {
+                            <tr>
+                                <td>
+                                    🟢
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => attachment.FileName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => attachment.Description)
+                                </td>
+                                <td>
+                                    <a target="_blank" href="@attachment.FilePath">@attachment.FilePath</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table> using (Html.BeginForm("Create", "TicketAttachments", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("TicketId", Model.Id)
+
+                    <div class="form-group">
+                        @Html.Label("File Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.Editor("FileName", new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Description", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.Editor("Description", new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+
+                    <div class="form-group pt-3">
+                        <div class="col-md-10 mt-2">
+                            <input type="file" name="file" />
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <div class="col-md-offset-2 col-md-10 ">
+                            <input type="submit" value="Add Attachment" class="btn backgroundDarkBlue text-white mt-2" style="width:30%" />
+                        </div>
+                    </div>
+                }
+            }
+        </div>
     </div>
     <div class="row">
-        <div class="col-12"></div>
+        <div class="col-12">
+            <h3 class="font-weight-bold mt-3">Change History</h3>
+            @if (Model.Histories.Count > 0)
+            {
+
+                <div class="row p-0" id="ticketHistoryRowContainer">
+                    <div class="col p-0">
+                        <table id="myTable" class="table m-0 width-100">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Changed By
+                                    </th>
+                                    <th>
+                                        Property
+                                    </th>
+                                    <th>
+                                        Old Value
+                                    </th>
+                                    <th>
+                                        New Value
+                                    </th>
+                                    <th>
+                                        Changed On
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Histories)
+                                {
+                                    <tr>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.User.FullName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Property)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.OldValue)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NewValue)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ChangedOn)
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                </div>
+            }
+            else
+            {
+                <h5>No changes have been made to this ticket</h5>
+            }
+
+        </div>
     </div>
 </div>
 
 <p>There are @Model.Comments.Count comments on this ticket.</p>
-@*@if (Model.Comments.Count != 0)
-    {
-        <h4>No Comments have been made for this ticket.</h4>
-    }*@
 
-@*@if(User.IsInRole("Admin") ||
-    (User.IsInRole("Developer") && Model.DeveloperId == User.Identity.GetUserId()) ||
-    (User.IsInRole("Submitter") && Model.SubmitterId == User.Identity.GetUserId()) ||
-    (User.IsInRole("Project Manager") && projectHelper.IsUserOnProject(User.Identity.GetUserId(), Model.ProjectId)))*@
 
-@if (ticketHelper.CanMakeComment(Model.Id))
-{
-    using (Html.BeginForm("Create", "TicketComments", FormMethod.Post))
-    {
-        @Html.AntiForgeryToken()
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+    CODE BEFORE 8/14 CLASS
 
-        <div class="form-horizontal">
-            <h4>TicketComment</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.Hidden("TicketId", Model.Id)
-            <div class="form-group">
-                @Html.Label("Comment", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.TextArea("Comment", new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
-                </div>
-            </div>
+    @*Show ticket specific data
+        Show some parent project data
+        Show ticket comments
+        Show ticket attachments*@
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10"></div>
+            @*Show project data*@
+            <p>Project Data</p>
+            <br />
+            <h2>Project Name: @Model.Project.Name</h2>
+            <h2>Project created: @Model.Project.Created</h2>
         </div>
-    }
-}
+        <div class="row">
+            <div class="col-md-12"></div>
+            @*Show ticket data*@
+            <p>Ticket Data</p>
+            <br />
+            <h2>Title: @Model.Issue</h2>
+            <h2>Priority: @Model.TicketPriority.Name</h2>
+            <h2>Status: @Model.TicketStatus.Name</h2>
+            <h2>Type: @Model.TicketType.Name</h2>
+        </div>
+        <div class="row">
+            <div class="col-md-6"></div>
+            @*Show ticket comments*@
+            <div class="col-md-6"></div>
+            @*Show ticket attachments*@
+            @*A mechanism for adding a new attachment*@
+            @using (Html.BeginForm("Create", "TicketAttachments", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.Hidden("TicketId", Model.Id)
 
-
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
-CODE BEFORE 8/14 CLASS
-
-@*Show ticket specific data
-Show some parent project data
-Show ticket comments
-Show ticket attachments*@
-<div class="container">
-    <div class="row">
-        <div class="col-md-offset-1 col-md-10"></div>
-        @*Show project data*@
-        <p>Project Data</p>
-        <br />
-        <h2>Project Name: @Model.Project.Name</h2>
-        <h2>Project created: @Model.Project.Created</h2>
-    </div>
-    <div class="row">
-        <div class="col-md-12"></div>
-        @*Show ticket data*@
-        <p>Ticket Data</p>
-        <br />
-        <h2>Title: @Model.Issue</h2>
-        <h2>Priority: @Model.TicketPriority.Name</h2>
-        <h2>Status: @Model.TicketStatus.Name</h2>
-        <h2>Type: @Model.TicketType.Name</h2>
-    </div>
-    <div class="row">
-        <div class="col-md-6"></div>
-        @*Show ticket comments*@
-        <div class="col-md-6"></div>
-        @*Show ticket attachments*@
-        @*A mechanism for adding a new attachment*@
-        @using (Html.BeginForm("Create", "TicketAttachments", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            @Html.AntiForgeryToken()
-            @Html.Hidden("TicketId", Model.Id)
-
-            <div class="form-group">
-                @Html.Label("File Name", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.Editor("FileName", new { htmlAttributes = new { @class = "form-control" } })
+                <div class="form-group">
+                    @Html.Label("File Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.Editor("FileName", new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                @Html.Label("Description", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.TextArea("Description", new { htmlAttributes = new { @class = "form-control" } })
+                <div class="form-group">
+                    @Html.Label("Description", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextArea("Description", new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                @Html.Label("Attachment", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <input type="file" name="file" />
+                <div class="form-group">
+                    @Html.Label("Attachment", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input type="file" name="file" />
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Add Attachment" class="btn btn-primary" style="width: 100%" />
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Add Attachment" class="btn btn-primary" style="width: 100%" />
+                    </div>
                 </div>
-            </div>
-        }
-        @*A mechanism for displaying existing attachments*@
-        <hr />
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayName("Icon")
-                    </th>
-                    <th>
-                        @Html.DisplayName("Name")
-                    </th>
-                    <th>
-                        @Html.DisplayName("Path")
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var attachment in Model.TicketAttachments.ToList())
-                {
+            }
+            @*A mechanism for displaying existing attachments*@
+            <hr />
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => attachment.FileName)
-                        </td>
-                        <td>
-                            <a target="_blank" href="@attachment.FilePath">
-                                @Html.DisplayFor(modelItem => attachment.FilePath)
-                            </a>
-                        </td>
+                        <th>
+                            @Html.DisplayName("Icon")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Name")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Path")
+                        </th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @*@foreach (var attachment in Model.TicketAttachments.ToList())
+                    {
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => attachment.FileName)
+                            </td>
+                            <td>
+                                <a target="_blank" href="@attachment.FilePath">
+                                    @Html.DisplayFor(modelItem => attachment.FilePath)
+                                </a>
+                            </td>
+                        </tr>
+                    }*@
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>

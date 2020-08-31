@@ -96,15 +96,41 @@ namespace BugTracker.Controllers
             }
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DemoLogin(string emailKey, string passwordKey, string returnUrl)
+        {
+            var email = WebConfigurationManager.AppSettings[emailKey];
+            var password = WebConfigurationManager.AppSettings["DemoPassword"];
+            var result = await SignInManager.PasswordSignInAsync(email, password, false, shouldLockout: false);
+            switch (result)
+            {
+                case SignInStatus.Success:
+                    return RedirectToLocal(returnUrl);
+                case SignInStatus.Failure:
+                default:
+                    ModelState.AddModelError("", "Invalid login attempt.");
+                    return View();
+            }
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult DemoLogin()
+        {
+            return View();
+        }
+
         //[HttpPost]
         //[AllowAnonymous]
         //[ValidateAntiForgeryToken]
         //public async Task<ActionResult> DemoLoginAsync(string emailKey, string returnUrl)
         //{
-        //    This doesn't count login failures towards account lockout
-        //     To enable password failures to trigger account lockout, change to shouldLockout: true
-        //    var email = WebConfigurationManager.AppSettings(emailKey);
-        //    var password = WebConfigurationManager.AppSettings("DemoPassword");
+        //    //This doesn't count login failures towards account lockout
+        //    //To enable password failures to trigger account lockout, change to shouldLockout: true
+        //    var email = WebConfigurationManager.AppSettings[emailKey];
+        //    var password = WebConfigurationManager.AppSettings["DemoPassword"];
         //    var result = await SignInManager.PasswordSignInAsync(email, password, false, shouldLockout: false);
         //    switch (result)
         //    {
@@ -583,7 +609,7 @@ namespace BugTracker.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Dashboard", "Tickets");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

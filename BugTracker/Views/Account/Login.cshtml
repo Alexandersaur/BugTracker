@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Log in</title>
+    <title>BugZapper JS</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -27,7 +27,7 @@
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a href="../../index2.html"><b>Admin</b>LTE</a>
+            <a href="../../index2.html"><b>BugZapper</b>JS</a>
         </div>
         <!-- /.login-logo -->
         <div class="card">
@@ -78,16 +78,16 @@
 
                 <div class="social-auth-links text-center mb-3">
                     <p>- OR -</p>
-                    <a href="#" class="btn btn-block btn-primary">
+                    @*<a href="#" class="btn btn-block btn-primary">
                         <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
-                    </a>
+                    </a>*@
                     <a href="#" class="btn btn-block btn-danger">
-                        <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
+                        <i class="fab fa-google-plus mr-2"></i> Sign in using Google
                     </a>
                 </div>
                 <!-- /.social-auth-links -->
 
-                <p class="mb-1">
+                <p class="mb-0">
                     @Html.ActionLink("Forgot your password?", "ForgotPassword")
                 </p>
                 <p class="mb-0">
@@ -100,13 +100,34 @@
             <!-- /.login-card-body -->
         </div>
     </div>
-    <center><i class="fas fa-puzzle-piece fa-3x"></i></center>
-    @using(Html.BeginForm("DemoLoginAsync", "Account", FormMethod.Post))
+    @*<center><i class="fas fa-puzzle-piece fa-3x"></i></center>*@
+    @using (Html.BeginForm("DemoLogin", "Account", FormMethod.Post))
     {
         @Html.AntiForgeryToken();
-        @Html.Hidden("emailKey", "DemoDev3Email")
+        @Html.Hidden("emailKey", "DAJSE")
         <div>
-            <button type="submit" class="btn btn-success btn-block btn-flat">Login</button>
+            <button type="submit" class="btn btn-success btn-block btn-flat">Demo Admin Login</button>
+        </div>
+    }    @using (Html.BeginForm("DemoLogin", "Account", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken();
+        @Html.Hidden("emailKey", "DPMJSE")
+        <div>
+            <button type="submit" class="btn btn-primary btn-block btn-flat">Demo Project Manager Login</button>
+        </div>
+    }    @using (Html.BeginForm("DemoLogin", "Account", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken();
+        @Html.Hidden("emailKey", "DDJSE")
+        <div>
+            <button type="submit" class="btn btn-danger btn-block btn-flat">Demo Developer Login</button>
+        </div>
+    }    @using (Html.BeginForm("DemoLogin", "Account", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken();
+        @Html.Hidden("emailKey", "DSJSE")
+        <div>
+            <button type="submit" class="btn btn-dark btn-block btn-flat">Demo Submitter Login</button>
         </div>
     }
     <!-- /.login-box -->

@@ -124,8 +124,8 @@ namespace BugTracker.Helpers
                 db.SaveChanges();
             }
             //Scenario 3: a reassignment - neither old nor new ticket.DeveloperId is null, and they dont match (this could create two notifactions, one for the new user and one for the old user)
-            if (oldTicket.DeveloperId != newTicket.DeveloperId && oldTicket.DeveloperId != null && newTicket.DeveloperId != null)
-            {
+            //if (oldTicket.DeveloperId != newTicket.DeveloperId && oldTicket.DeveloperId != null && newTicket.DeveloperId != null)
+            //{
                 //var oldNotification = new TicketNotification()
                 //{
                 //    TicketId = oldTicket.Id,
@@ -136,7 +136,7 @@ namespace BugTracker.Helpers
                 //};
                 //db.TicketNotifications.Add(oldNotification);
                 //db.SaveChanges();
-            }
+            //}
         }
         public void EditedTicket(Ticket oldTicket, Ticket newTicket)
         {

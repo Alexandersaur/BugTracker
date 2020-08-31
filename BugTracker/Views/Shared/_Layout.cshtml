@@ -50,10 +50,18 @@
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="#" class="nav-link">Contact</a>
                 </li>
+                @*@if (User.Identity.IsAuthenticated)
+                {
+                    <h2>Hello @userHelper.LastNameFirst(User.Identity.GetUserId())</h2>
+                }
+                else
+                {
+                    <h2>PLEASE LOGIN</h2>
+                }*@
             </ul>
 
             <!-- SEARCH FORM -->
-            <form class="form-inline ml-3">
+            @*<form class="form-inline ml-3">
                 <div class="input-group input-group-sm">
                     <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
                     <div class="input-group-append">
@@ -62,11 +70,11 @@
                         </button>
                     </div>
                 </div>
-            </form>
+            </form>*@
 
             <!-- Right navbar links -->
-            <ul class="navbar-nav ml-auto">
-                <!-- Notifications Dropdown Menu -->
+            @*<ul class="navbar-nav ml-auto">
+                 Notifications Dropdown Menu 
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="far fa-bell"></i>
@@ -93,7 +101,7 @@
                         <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
                     </div>
                 </li>
-            </ul>
+            </ul>*@
         </nav>
         <!-- /.navbar -->
         <!-- Main Sidebar Container -->
@@ -309,7 +317,7 @@
             @RenderBody()
         </div>
         <footer class="main-footer">
-            <strong>Copyright &copy; 2020 <a href="http://adminlte.io">LINK TO PORTFOLIO Jeremy Steward</a>.</strong>
+            <strong>Copyright &copy; 2020 <a href="//jeremysteward.com" target="_blank">Jeremy Steward</a>.</strong>
             All rights reserved.
             <div class="float-right d-none d-sm-inline-block">
                 <b>Version</b> 1.0.0

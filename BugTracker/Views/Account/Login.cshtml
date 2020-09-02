@@ -26,110 +26,116 @@
 </head>
 <body class="hold-transition login-page">
     <div class="login-box">
+        <hr />
         <div class="login-logo">
-            <a href="../../index2.html"><b>BugZapper</b>JS</a>
+            <b>BugZapper</b>JS
         </div>
         <!-- /.login-logo -->
-        <div class="card">
-            <div class="card-body login-card-body">
-                <p class="login-box-msg">Sign in to start your session</p>
+            <div class="card">
+                <div class="card-body login-card-body">
+                    <p class="login-box-msg">Sign in to start your session</p>
 
-                <section id="loginForm">
-                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <div class="input-group mb-3">
-                            <input type="email" class="form-control" name="Email" placeholder="Email">
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <span class="fas fa-envelope"></span>
+                    <section id="loginForm">
+                        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="input-group mb-3">
+                                <input type="email" class="form-control" name="Email" placeholder="Email">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-envelope"></span>
+                                    </div>
                                 </div>
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                             </div>
-                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="input-group mb-3">
-                            <input type="password" class="form-control" name="Password" placeholder="Password">
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <span class="fas fa-lock"></span>
+                            <div class="input-group mb-3">
+                                <input type="password" class="form-control" name="Password" placeholder="Password">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-lock"></span>
+                                    </div>
                                 </div>
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                             </div>
-                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="row">
-                            <div class="col-8">
-                                <div class="icheck-primary">
-                                    <input type="checkbox" name="RememberMe" id="rememberMe">
-                                    <label for="rememberMe">
-                                        Remember Me
-                                    </label>
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="icheck-primary">
+                                        <input type="checkbox" name="RememberMe" id="rememberMe">
+                                        <label for="rememberMe">
+                                            Remember Me
+                                        </label>
+                                    </div>
                                 </div>
+                                <!-- /.col -->
+                                <div class="col-4">
+                                    <button type="submit" class="btn btn-outline-dark btn-block">Sign In</button>
+                                </div>
+                                <!-- /.col -->
                             </div>
-                            <!-- /.col -->
-                            <div class="col-4">
-                                <button type="submit" class="btn btn-primary btn-block">Sign In</button>
-                            </div>
-                            <!-- /.col -->
-                        </div>
-                    }
-                </section>
+                        }
+                    </section>
 
 
-                <div class="social-auth-links text-center mb-3">
-                    <p>- OR -</p>
-                    @*<a href="#" class="btn btn-block btn-primary">
-                        <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
-                    </a>*@
-                    <a href="#" class="btn btn-block btn-danger">
-                        <i class="fab fa-google-plus mr-2"></i> Sign in using Google
-                    </a>
+                    <div class="social-auth-links text-center mb-3">
+                        <p>- OR -</p>
+                        @*<a href="#" class="btn btn-block btn-primary">
+                            <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
+                        </a>*@
+                        <a href="#" class="btn btn-block btn-dark">
+                            <i class="fab fa-google-plus mr-2"></i> Sign in using Google
+                        </a>
+                    </div>
+                    <!-- /.social-auth-links -->
+
+                    <p class="mb-0">
+                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                    </p>
+                    <p class="mb-0">
+                        @Html.ActionLink("Register as a new user", "Register")
+                    </p>
+                    <p class="mb-0">
+                        @Html.ActionLink("Resend Email Confirmation", "ResendEmailConfirmation")
+                    </p>
                 </div>
-                <!-- /.social-auth-links -->
-
-                <p class="mb-0">
-                    @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                </p>
-                <p class="mb-0">
-                    @Html.ActionLink("Register as a new user", "Register")
-                </p>
-                <p class="mb-0">
-                    @Html.ActionLink("Resend Email Confirmation", "ResendEmailConfirmation")
-                </p>
+                <!-- /.login-card-body -->
             </div>
-            <!-- /.login-card-body -->
         </div>
-    </div>
     @*<center><i class="fas fa-puzzle-piece fa-3x"></i></center>*@
+<div class="col-4" style="padding-left:30px; padding-right:30px">
     @using (Html.BeginForm("DemoLogin", "Account", FormMethod.Post))
     {
         @Html.AntiForgeryToken();
         @Html.Hidden("emailKey", "DAJSE")
         <div>
-            <button type="submit" class="btn btn-success btn-block btn-flat">Demo Admin Login</button>
+            <button type="submit" class="btn btn-block btn-flat" style="background-color:#4e89ae; color:white">Demo Admin Login</button>
         </div>
-    }    @using (Html.BeginForm("DemoLogin", "Account", FormMethod.Post))
+    }
+    @using (Html.BeginForm("DemoLogin", "Account", FormMethod.Post))
     {
         @Html.AntiForgeryToken();
         @Html.Hidden("emailKey", "DPMJSE")
         <div>
-            <button type="submit" class="btn btn-primary btn-block btn-flat">Demo Project Manager Login</button>
+            <button type="submit" class="btn btn-block btn-flat" style="background-color:#43658b; color:white">Demo Project Manager Login</button>
         </div>
-    }    @using (Html.BeginForm("DemoLogin", "Account", FormMethod.Post))
+    }
+    @using (Html.BeginForm("DemoLogin", "Account", FormMethod.Post))
     {
         @Html.AntiForgeryToken();
         @Html.Hidden("emailKey", "DDJSE")
         <div>
-            <button type="submit" class="btn btn-danger btn-block btn-flat">Demo Developer Login</button>
+            <button type="submit" class="btn btn-block btn-flat" style="background-color: #ed6663; color:white">Demo Developer Login</button>
         </div>
-    }    @using (Html.BeginForm("DemoLogin", "Account", FormMethod.Post))
+    }
+    @using (Html.BeginForm("DemoLogin", "Account", FormMethod.Post))
     {
         @Html.AntiForgeryToken();
         @Html.Hidden("emailKey", "DSJSE")
         <div>
-            <button type="submit" class="btn btn-dark btn-block btn-flat">Demo Submitter Login</button>
+            <button type="submit" class="btn btn-block btn-flat" style="background-color: #ffa372; color:white">Demo Submitter Login</button>
         </div>
     }
+    </div>
     <!-- /.login-box -->
     <!-- jQuery -->
     <script src="~/Scripts/jquery.min.js"></script>

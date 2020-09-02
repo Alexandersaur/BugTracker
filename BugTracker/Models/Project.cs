@@ -10,8 +10,8 @@ namespace BugTracker.Models
         public int Id { get; set; }
 
         #region Parents/Children Relationships
-        public ICollection<Ticket> Tickets { get; set; }
-        public ICollection<ApplicationUser> Users { get; set; }
+        public virtual ICollection<Ticket> Tickets { get; set; }
+        public virtual ICollection<ApplicationUser> Users { get; set; }
         #endregion
 
         #region Constructor

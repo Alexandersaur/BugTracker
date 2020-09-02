@@ -41,7 +41,7 @@ namespace BugTracker.Controllers
         // GET: TicketNotifications/Create
         public ActionResult Create()
         {
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "SubmitterId");
+            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Issue");
             ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName");
             return View();
         }
@@ -60,7 +60,7 @@ namespace BugTracker.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "SubmitterId", ticketNotification.TicketId);
+            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Issue", ticketNotification.TicketId);
             ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", ticketNotification.UserId);
             return View(ticketNotification);
         }
@@ -77,7 +77,7 @@ namespace BugTracker.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "SubmitterId", ticketNotification.TicketId);
+            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Issue", ticketNotification.TicketId);
             ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", ticketNotification.UserId);
             return View(ticketNotification);
         }
@@ -95,7 +95,7 @@ namespace BugTracker.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "SubmitterId", ticketNotification.TicketId);
+            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Issue", ticketNotification.TicketId);
             ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", ticketNotification.UserId);
             return View(ticketNotification);
         }

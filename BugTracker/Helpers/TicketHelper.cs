@@ -66,6 +66,11 @@ namespace BugTracker.Helpers
                     return false;
             }
         }
+        public int TotalNumberOfTickets()
+        {
+            var currentNumberOfTickets = db.Tickets.Count();
+            return currentNumberOfTickets;
+        }
         public bool CanEditTicket(int ticketId)
         {
             var userId = HttpContext.Current.User.Identity.GetUserId();

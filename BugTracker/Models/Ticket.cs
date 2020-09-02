@@ -11,22 +11,31 @@ namespace BugTracker.Models
 
         #region Parents/Children Relationships
         public int ProjectId { get; set; }
-        public virtual Project Project { get; set; }
+        
         public int TicketPriorityId { get; set; }
-        public virtual TicketPriority TicketPriority { get; set; }
+        
         public int TicketStatusId { get; set; }
-        public virtual TicketStatus TicketStatus { get; set; }
+      
         public int TicketTypeId { get; set; }
-        public virtual TicketType TicketType { get; set; }
-        public string SubmitterId { get; set; }        
-        public virtual ApplicationUser Submitter { get; set; }
+
+        public string SubmitterId { get; set; }
         public string DeveloperId { get; set; }
+
+
+        #endregion
+
+
+        public virtual Project Project { get; set; }
+        public virtual TicketPriority TicketPriority { get; set; }
+        public virtual TicketStatus TicketStatus { get; set; }
+        public virtual TicketType TicketType { get; set; }
+        public virtual ApplicationUser Submitter { get; set; }
         public virtual ApplicationUser Developer { get; set; }
+
         public virtual ICollection<TicketAttachment> Attachments { get; set; }
         public virtual ICollection<TicketComment> Comments { get; set; }
         public virtual ICollection<TicketHistory> Histories { get; set; }
         public virtual ICollection<TicketNotification> Notifications { get; set; }
-        #endregion
 
         #region Constructor
         public Ticket()

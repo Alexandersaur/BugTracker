@@ -42,7 +42,7 @@ namespace BugTracker.Controllers
         // GET: TicketComments/Create
         public ActionResult Create()
         {
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "SubmitterId");
+            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Issue");
             ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName");
             return View();
         }
@@ -63,7 +63,7 @@ namespace BugTracker.Controllers
                 return RedirectToAction("Details", "Tickets", new { id = ticketComment.TicketId });
             }
 
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "SubmitterId", ticketComment.TicketId);
+            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Issue", ticketComment.TicketId);
             ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", ticketComment.UserId);
             return View(ticketComment);
         }
@@ -80,7 +80,7 @@ namespace BugTracker.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "SubmitterId", ticketComment.TicketId);
+            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Issue", ticketComment.TicketId);
             ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", ticketComment.UserId);
             return View(ticketComment);
         }
@@ -98,7 +98,7 @@ namespace BugTracker.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "SubmitterId", ticketComment.TicketId);
+            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Issue", ticketComment.TicketId);
             ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", ticketComment.UserId);
             return View(ticketComment);
         }

@@ -609,7 +609,7 @@ namespace BugTracker.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Dashboard", "Tickets");
+            return RedirectToAction("Index", "Home");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

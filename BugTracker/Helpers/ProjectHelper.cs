@@ -19,6 +19,12 @@ namespace BugTracker.Helpers
             Project project = db.Projects.Find(projectId);
             return project.Users.Any(u => u.Id == userId);
         }
+        public int NumberOfProjects()
+        {
+            var currentNumberOfProjects = db.Projects.Count();
+            return currentNumberOfProjects;
+
+        }
         public void AddUserToProject(string userId, int projectId) 
         {
             if (!IsUserOnProject(userId, projectId))

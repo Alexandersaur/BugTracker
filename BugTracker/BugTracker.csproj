@@ -212,6 +212,7 @@
     <Compile Include="Models\TicketType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\DashboardVM.cs" />
     <Compile Include="ViewModels\MorrisChartData.cs" />
     <Compile Include="ViewModels\MyTicketViewModel.cs" />
   </ItemGroup>
@@ -231,6 +232,7 @@
     <Content Include="fonts\fa-solid-900.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Images\BugZapLogo.png" />
     <Content Include="Images\default_avatar.png" />
     <Content Include="Scripts\adminlte.js" />
     <Content Include="Scripts\adminlte.min.js" />

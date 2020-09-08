@@ -71,6 +71,7 @@ namespace BugTracker.Helpers
             var currentNumberOfTickets = db.Tickets.Count();
             return currentNumberOfTickets;
         }
+
         public bool CanEditTicket(int ticketId)
         {
             var userId = HttpContext.Current.User.Identity.GetUserId();
@@ -93,6 +94,20 @@ namespace BugTracker.Helpers
                     {
                         return false;
                     }
+                default:
+                    return false;
+            }
+        }
+        public bool CanCreateTicket()
+        {
+            var userId = HttpContext.Current.User.Identity.GetUserId();
+            var myRole = userRoleHelper.ListUserRoles(userId).FirstOrDefault();
+
+            switch (myRole)
+            {
+                case "Admin":
+                case "Submitter":
+                    return true;
                 default:
                     return false;
             }

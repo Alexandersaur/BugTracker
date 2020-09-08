@@ -1,9 +1,14 @@
 ﻿@model BugTracker.Models.ApplicationUser
 @using BugTracker.Helpers
 @using Microsoft.AspNet.Identity
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+
 @{
     ViewBag.Title = "Home Page";
-    var userHelper = new UserHelper();
+    UserRoleHelper roleHelper = new UserRoleHelper();
+    ProjectHelper projectHelper = new ProjectHelper();
+    UserHelper userHelper = new UserHelper();
+    TicketHelper ticketHelper = new TicketHelper();
 }
 
 <style>
@@ -15,220 +20,528 @@
 <!-- Content Header (Page header) -->
 <div class="content-header">
     <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 class="m-0 text-dark">BugZapper JS</h1>
+            <div class="col">
+                <h1 class="m-0 text-dark" style="font-size:400%; text-align:center"><b>Dashboard</b></h1>
             </div><!-- /.col -->
-            <div class="col-sm-6">
+            @*<div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
                     <li class="breadcrumb-item active">Dashboard v1</li>
                 </ol>
-            </div><!-- /.col -->
-        </div><!-- /.row -->
+            </div> /.col*@ 
     </div><!-- /.container-fluid -->
 </div>
 <!-- /.content-header -->
 <!-- Main content -->
-<section class="content">
-    <div class="container-fluid">
-        <!-- Small boxes (Stat box) -->
-        <div class="row">
-            <div class="col-lg-3 col-6">
-                <!-- small box -->
-                <div class="small-box" style="background-color:#4e89ae; color:white">
-                    <div class="inner">
-                        @*<h3>@userHelper.GetAvatarPath</h3>*@
-                        @*@if (User.Identity.IsAuthenticated)
-        {
-            <h2>Hello @userHelper.LastNameFirst(User.Identity.GetUserId())</h2>
-        }
-        else
-        {
-            <h2>PLEASE LOGIN</h2>
-        }*@
-                        <h3>Admin</h3>
-                        <p>Can create and edit Projects and Tickets</p>
-                        <p>Can assign all users to Projects and Tickets</p>
+@*<section class="content">
+        <div class="container-fluid">
+             Small boxes (Stat box)
+            <div class="row">
+                <div class="col-lg-3 col-6">
+                     small box
+                    <div class="small-box" style="background-color:#4e89ae; color:white">
+                        <div class="inner">
+                            <h3>@userHelper.GetAvatarPath</h3>
+                            @if (User.Identity.IsAuthenticated)
+            {
+                <h2>Hello @userHelper.LastNameFirst(User.Identity.GetUserId())</h2>
+            }
+            else
+            {
+                <h2>PLEASE LOGIN</h2>
+            }
+                            <h3>Admin</h3>
+                            <p>Can create and edit Projects and Tickets</p>
+                            <p>Can assign all users to Projects and Tickets</p>
 
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-bag"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
-                    @*<div class="icon">
-                        <i class="ion ion-bag"></i>
-                    </div>*@
-                    @*<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>*@
                 </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-                <!-- small box -->
-                <div class="small-box" style="background-color:#43658b; color:white">
-                    <div class="inner">
-                        <h3>Proj. Manager</h3>
+                 ./col
+                <div class="col-lg-3 col-6">
+                     small box
+                    <div class="small-box" style="background-color:#43658b; color:white">
+                        <div class="inner">
+                            <h3>Proj. Manager</h3>
 
-                        <p>Can create and edit assigned Projects and Tickets</p>
-                        <p>Can add comments and attachments to Tickets</p>
+                            <p>Can create and edit assigned Projects and Tickets</p>
+                            <p>Can add comments and attachments to Tickets</p>
 
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-stats-bars"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
-                    @*<div class="icon">
-                        <i class="ion ion-stats-bars"></i>
-                    </div>*@
-                    @*<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>*@
                 </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-                <!-- small box -->
-                <div class="small-box" style="background-color: #ed6663; color:white">
-                    <div class="inner">
-                        <h3>Developer</h3>
-                        <p>Can view assigned Projects and Tickets</p>
+                 ./col
+                <div class="col-lg-3 col-6">
+                     small box
+                    <div class="small-box" style="background-color: #ed6663; color:white">
+                        <div class="inner">
+                            <h3>Developer</h3>
+                            <p>Can view assigned Projects and Tickets</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-person-add"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
-                    @*<div class="icon">
-                        <i class="ion ion-person-add"></i>
-                    </div>*@
-                    @*<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>*@
                 </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-                <!-- small box -->
-                <div class="small-box" style="background-color: #ffa372; color:white">
-                    <div class="inner">
-                        <h3>Submitter</h3>
-                        <p>Can view assigned Projects and Tickets</p>
-                        <p>Can create new Tickets</p>
+                 ./col
+                <div class="col-lg-3 col-6">
+                     small box
+                    <div class="small-box" style="background-color: #ffa372; color:white">
+                        <div class="inner">
+                            <h3>Submitter</h3>
+                            <p>Can view assigned Projects and Tickets</p>
+                            <p>Can create new Tickets</p>
 
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-pie-graph"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
-                    @*<div class="icon">
-                        <i class="ion ion-pie-graph"></i>
-                    </div>*@
-                    @*<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>*@
                 </div>
+                 ./col
             </div>
-            <!-- ./col -->
+            /.row
+             Main row
         </div>
-        @*/.row*@
-         Main row
+    </section>
+
+
+    <hr />*@
+
+@*<div class="row">
+        <div class="col-1">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <img src="@Model.AvatarPath" class="img-circle" />
+            }
+        </div>
     </div>
-</section>
+
+    <hr />*@
 
 
-<hr />
 
-<div class="row">
-    <div class="col-1">
-        @if (User.Identity.IsAuthenticated)
-        {
-            <img src="@Model.AvatarPath" class="img-circle" />
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <div class="info-box">
+                <!-- Apply any bg-* class to to the icon to color it -->
+                <span class="info-box-icon bg-red"><i class="fas fa-fire"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Projects</span>
+                    <span class="info-box-number">@Model.Projects.Count</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+@*<section id="Ajax">
+        <div class="row">
+            <div id="priorityChart" class="col-md-4 chart"></div>
+            <div class="row">
+                <div class="col-md-12 text-center h3">Ticket Priorities</div>
+            </div>
+            <div class="row">
+                <div id="priorityChart" class="col-md-12 chart"></div>
+            </div>
+            <div id="statusChart" class="col-md-4 chart"></div>
+            <div id="typeChart" class="col-md-4 chart"></div>
+        </div>
+
+        @section scripts{
+            <script>
+            var url = '@Url.Action("GetAllTicketPriorityData", "MorrisCharts")'
+            $.ajax({
+                type: 'POST',
+                contentType: 'application/json, charset=utf-8',
+                url: url,
+                dataType: 'json',
+                success: function (response) {
+                    new Morris.Line({
+                        // ID of the element in which to draw the chart.
+                        element: 'priorityChart',
+                        // Chart data records -- each entry in this array corresponds to a point on
+                        // the chart.
+                        data: response,
+                        // The name of the data record attribute that contains x-values.
+                        xkey: 'Label',
+                        // A list of names of data record attributes that contain y-values.
+                        ykeys: ['Value'],
+                        // Labels for the ykeys -- will be displayed when you hover over the
+                        // chart.
+                        labels: ['Value']
+                    });
+                },
+                error: function (jqXHR, textStatus, errorThrown) //what to do if fails
+                {
+                    alert('bad,' + errorThrown + "," + jqXHR.responseText + "," + textStatus);
+                },
+            });
+
+            </script>
+            <script>
+            var url = '@Url.Action("GetAllTicketStatusData", "MorrisCharts")'
+            $.ajax({
+                type: 'POST',
+                contentType: 'application/json, charset=utf-8',
+                url: url,
+                dataType: 'json',
+                success: function (response) {
+                    new Morris.Line({
+                        // ID of the element in which to draw the chart.
+                        element: 'statusChart',
+                        // Chart data records -- each entry in this array corresponds to a point on
+                        // the chart.
+                        data: response,
+                        // The name of the data record attribute that contains x-values.
+                        xkey: 'Label',
+                        // A list of names of data record attributes that contain y-values.
+                        ykeys: ['Value'],
+                        // Labels for the ykeys -- will be displayed when you hover over the
+                        // chart.
+                        labels: ['Value']
+                    });
+                },
+                error: function (jqXHR, textStatus, errorThrown) //what to do if fails
+                {
+                    alert('bad,' + errorThrown + "," + jqXHR.responseText + "," + textStatus);
+                },
+            });
+
+            </script>
+            <script>
+            var url = '@Url.Action("GetAllTicketTypeData", "MorrisCharts")'
+            $.ajax({
+                type: 'POST',
+                contentType: 'application/json, charset=utf-8',
+                url: url,
+                dataType: 'json',
+                success: function (response) {
+                    new Morris.Line({
+                        // ID of the element in which to draw the chart.
+                        element: 'typeChart',
+                        // Chart data records -- each entry in this array corresponds to a point on
+                        // the chart.
+                        data: response,
+                        // The name of the data record attribute that contains x-values.
+                        xkey: 'Label',
+                        // A list of names of data record attributes that contain y-values.
+                        ykeys: ['Value'],
+                        // Labels for the ykeys -- will be displayed when you hover over the
+                        // chart.
+                        labels: ['Value']
+                    });
+                },
+                error: function (jqXHR, textStatus, errorThrown) //what to do if fails
+                {
+                    alert('bad,' + errorThrown + "," + jqXHR.responseText + "," + textStatus);
+                },
+            });
+
+            </script>
         }
+    </section>*@
+
+
+
+
+
+
+
+
+
+
+
+
+@*@model Bug_Tracker.ViewModels.DashboardVM
+    @using Microsoft.AspNet.Identity;
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+    @{ ViewBag.Title = "Dashboard";
+                    var projectHelper = new Bug_Tracker.Helpers.ProjectHelper(); }
+    <h2>Dashboard</h2>*@
+@*@using (Html.BeginForm("Create" , "Projects", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken();
+        @Html.Hidden("url", Request.Url.GetComponents(UriComponents.PathAndQuery, UriFormat.SafeUnescaped))
+
+        <input type="text" name="Name" placeholder="Name" />
+        <input type="text" name="Description" placeholder="Description" />
+        <button type="submit">Submit</button>
+    }
+
+    <table id="table_id" class="table-bordered table bg-transparent dataTable">
+        <thead>
+            <tr style="font-size:22px; font-weight:500;">
+                <th>
+                    Title
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Developer
+                </th>
+                <th>
+                    Priority
+                </th>
+                <th>
+                    Type
+                </th>
+                <th>
+                    Status
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ticket in Model.Tickets)
+            {
+                <tr style="font-size:18px">
+                    <td style="cursor:pointer" onclick="window.location.href='@Url.Action("Details","Tickets", new {ticket.Id })'">
+                        @ticket.Title
+                    </td>
+                    <td style="cursor:pointer" onclick="window.location.href='@Url.Action("Details","Tickets", new {ticket.Id })'">
+                        @ticket.Description
+                    </td>
+                    @if (ticket.Developer == null)
+                    {
+                        <td>
+                            No Developer
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @ticket.Developer.FullName
+                        </td>
+                    }
+                    <td>
+                        @if (ticket.TicketPriority.Name == "URGENT")
+                        {
+                            <span class="float-lg-right margPad bg-red">URGENT</span>
+                        }
+                        @if (ticket.TicketPriority.Name == "Low")
+                        {
+                            <span class="float-lg-right margPad bg-gradient-green">Low </span>
+                        }
+                        @if (ticket.TicketPriority.Name == "Medium")
+                        {
+                            <span class="float-lg-right margPad bg-gradient-yellow">Medium</span>
+                        }
+                        @if (ticket.TicketPriority.Name == "High")
+                        {
+                            <span class="float-lg-right margPad" style="background-color:#a10000; color:white">High </span>
+                        }
+                        @if (ticket.TicketPriority.Name == "On Hold")
+                        {
+                            <span class="float-lg-right margPad">On Hold</span>
+                        }
+                    </td>
+                    <td>
+                        @ticket.TicketType.Name
+                    </td>
+                    <td>
+                        @ticket.TicketStatus.Name
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>*@
+
+
+@if (User.IsInRole("Admin") || User.IsInRole("DemoAdmin") || User.IsInRole("Project Manager") || User.IsInRole("DemoPM"))
+{
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="info-box">
+                    <!-- Apply any bg-* class to to the icon to color it -->
+                    <span class="info-box-icon bg-red"><i class="fas fa-fire"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">High Priority Tickets</span>
+                        @*<span class="info-box-number">@Model.HighPriorityTicketCount</span>*@
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+            </div>
+            <div class="col">
+                <!-- /.info-box -->
+                <div class="info-box">
+                    <!-- Apply any bg-* class to to the icon to color it -->
+                    <span class="info-box-icon bg-orange"><i class="fas fa-exclamation-triangle"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Unassigned Tickets</span>
+                        @*<span class="info-box-number">@Model.UnassignedTicketCount</span>*@
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+            </div>
+            <div class="col">
+                <!-- /.info-box -->
+                <div class="info-box">
+                    <!-- Apply any bg-* class to to the icon to color it -->
+                    <span class="info-box-icon bg-green"><i class="fas fa-check"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Resolved Tickets Last 7 days</span>
+                        @*<span class="info-box-number">@Model.RecentResolvedCount</span>*@
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+        </div>
+    </div>}
+@if (User.IsInRole("Developer") || User.IsInRole("DemoDeveloper"))
+{
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="info-box">
+                    <!-- Apply any bg-* class to to the icon to color it -->
+                    <span class="info-box-icon bg-green"><i class="fas fa-book"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Active Projects</span>
+                        @*<span class="info-box-number">@Model.AssignedProjectCount</span>*@
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+            </div>
+            <div class="col">
+                <!-- /.info-box -->
+                <div class="info-box">
+                    <!-- Apply any bg-* class to to the icon to color it -->
+                    <span class="info-box-icon bg-orange"><i class="fas fa-tag"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Assigned Tickets</span>
+                        @*<span class="info-box-number">@Model.AssignedTicketCount</span>*@
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+            </div>
+            <div class="col">
+                <!-- /.info-box -->
+                <div class="info-box">
+                    <!-- Apply any bg-* class to to the icon to color it -->
+                    <span class="info-box-icon bg-red"><i class="fas fa-exclamation-circle"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">High Priority Tickets</span>
+                        @*<span class="info-box-number">@Model.HighPriorityTicketCount</span>*@
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+        </div>
+    </div>}
+@if (User.IsInRole("Submitter") || User.IsInRole("DemoSubmitter"))
+{
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="info-box">
+                    <!-- Apply any bg-* class to to the icon to color it -->
+                    <span class="info-box-icon bg-green"><i class="fas fa-book"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Active Projects</span>
+                        @*<span class="info-box-number">@Model.AssignedProjectCount</span>*@
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+            </div>
+            <div class="col">
+                <!-- /.info-box -->
+                <div class="info-box">
+                    <!-- Apply any bg-* class to to the icon to color it -->
+                    <span class="info-box-icon bg-green"><i class="fas fa-tag"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Submitted Tickets</span>
+                        @*<span class="info-box-number">@Model.SubmittedTicketCount</span>*@
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+            </div>
+        </div>
+    </div>
+ }
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <h4>Tickets By Priority</h4>
+            <div id="chart1">
+            </div>
+        </div>
+        <div class="col">
+            <h4>Tickets By Status</h4>
+            <div id="chart2">
+            </div>
+        </div>
+        <div class="col">
+            <h4>Tickets By Type</h4>
+            <div id="chart3">
+            </div>
+        </div>
     </div>
 </div>
-
-<hr />
-
-<div class="row">
-    <div id="priorityChart" class="col-md-4 chart"></div>
-    <div class="row">
-        <div class="col-md-12 text-center h3">Ticket Priorities</div>
-    </div>
-    <div class="row">
-        <div id="priorityChart" class="col-md-12 chart"></div>
-    </div>
-    <div id="statusChart" class="col-md-4 chart"></div>
-    <div id="typeChart" class="col-md-4 chart"></div>
-</div>
-
-
+<script>
+        $(function () {
+            var url = '@Url.Action("ProduceChart1Data", "Graphing")';
+            $.post(url).then(function (response) {
+                new Morris.Bar({
+                    element: 'chart1',
+                    data: response,
+                    xkey: 'label',
+                    ykeys: ['value'],
+                    labels: ['Ticket Count'],
+                    resize: true
+                });
+            })
+            var url = '@Url.Action("ProduceChart2Data", "Graphing")';
+            $.post(url).then(function (response) {
+                new Morris.Donut({
+                    element: 'chart2',
+                    data: response,
+                    xkey: 'label',
+                    ykeys: ['value'],
+                    labels: ['Ticket Count'],
+                    resize: true
+                });
+            })
+            var url = '@Url.Action("ProduceChart3Data", "Graphing")';
+            $.post(url).then(function (response) {
+                new Morris.Donut({
+                    element: 'chart3',
+                    data: response,
+                    xkey: 'label',
+                    ykeys: ['value'],
+                    labels: ['Ticket Count'],
+                    resize: true
+                });
+            })
+        })
+</script>
 @section scripts{
+    <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
     <script>
-        var url = '@Url.Action("GetAllTicketPriorityData", "Morris Charts")'
-        $.ajax({
-            type: 'POST',
-            contentType: 'application/json, charset=utf-8',
-            url: url,
-            dataType: 'json',
-            success: function (response) {
-                new Morris.Line({
-                    // ID of the element in which to draw the chart.
-                    element: 'priorityChart',
-                    // Chart data records -- each entry in this array corresponds to a point on
-                    // the chart.
-                    data: response,
-                    // The name of the data record attribute that contains x-values.
-                    xkey: 'Label',
-                    // A list of names of data record attributes that contain y-values.
-                    ykeys: ['Value'],
-                    // Labels for the ykeys -- will be displayed when you hover over the
-                    // chart.
-                    labels: ['Value']
-                });
-            },
-            error: function (jqXHR, textStatus, errorThrown) //what to do if fails
-            {
-                alert('bad,' + errorThrown + "," + jqXHR.responseText + "," + textStatus);
-            },
+        $(document).ready(function () {
+            $('table').DataTable();
         });
-
     </script>
-    <script>
-        var url = '@Url.Action("GetAllTicketStatusData", "Morris Charts")'
-        $.ajax({
-            type: 'POST',
-            contentType: 'application/json, charset=utf-8',
-            url: url,
-            dataType: 'json',
-            success: function (response) {
-                new Morris.Line({
-                    // ID of the element in which to draw the chart.
-                    element: 'statusChart',
-                    // Chart data records -- each entry in this array corresponds to a point on
-                    // the chart.
-                    data: response,
-                    // The name of the data record attribute that contains x-values.
-                    xkey: 'Label',
-                    // A list of names of data record attributes that contain y-values.
-                    ykeys: ['Value'],
-                    // Labels for the ykeys -- will be displayed when you hover over the
-                    // chart.
-                    labels: ['Value']
-                });
-            },
-            error: function (jqXHR, textStatus, errorThrown) //what to do if fails
-            {
-                alert('bad,' + errorThrown + "," + jqXHR.responseText + "," + textStatus);
-            },
-        });
-
-    </script>
-    <script>
-        var url = '@Url.Action("GetAllTicketTypeData", "Morris Charts")'
-        $.ajax({
-            type: 'POST',
-            contentType: 'application/json, charset=utf-8',
-            url: url,
-            dataType: 'json',
-            success: function (response) {
-                new Morris.Line({
-                    // ID of the element in which to draw the chart.
-                    element: 'typeChart',
-                    // Chart data records -- each entry in this array corresponds to a point on
-                    // the chart.
-                    data: response,
-                    // The name of the data record attribute that contains x-values.
-                    xkey: 'Label',
-                    // A list of names of data record attributes that contain y-values.
-                    ykeys: ['Value'],
-                    // Labels for the ykeys -- will be displayed when you hover over the
-                    // chart.
-                    labels: ['Value']
-                });
-            },
-            error: function (jqXHR, textStatus, errorThrown) //what to do if fails
-            {
-                alert('bad,' + errorThrown + "," + jqXHR.responseText + "," + textStatus);
-            },
-        });
-
-    </script>
-
 }

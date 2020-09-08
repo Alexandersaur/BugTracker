@@ -1,4 +1,5 @@
 ﻿using BugTracker.Models;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace BugTracker.Helpers
 
         private ApplicationDbContext db = new ApplicationDbContext();
         private UserRoleHelper roleHelper = new UserRoleHelper();
+        private UserHelper userHelper = new UserHelper();
+
         public bool IsUserOnProject(string userId, int projectId)
         {
             Project project = db.Projects.Find(projectId);
@@ -24,6 +27,48 @@ namespace BugTracker.Helpers
             var currentNumberOfProjects = db.Projects.Count();
             return currentNumberOfProjects;
 
+        }
+        public bool CanCreateProject()
+        {
+            var userId = HttpContext.Current.User.Identity.GetUserId();
+            var myRole = roleHelper.ListUserRoles(userId).FirstOrDefault();
+
+            switch (myRole)
+            {
+                case "Admin":
+                case "ProjectManager":
+                    return true;
+                default:
+                    return false;
+            }
+        }
+        public bool CanEditProject()
+        {
+            var userId = HttpContext.Current.User.Identity.GetUserId();
+            var myRole = roleHelper.ListUserRoles(userId).FirstOrDefault();
+
+            switch (myRole)
+            {
+                case "Admin":
+                case "ProjectManager":
+                    return true;
+                default:
+                    return false;
+            }
+        }
+        public bool CanViewAllProjects()
+        {
+            var userId = HttpContext.Current.User.Identity.GetUserId();
+            var myRole = roleHelper.ListUserRoles(userId).FirstOrDefault();
+
+            switch (myRole)
+            {
+                case "Admin":
+                case "ProjectManager":
+                    return true;
+                default:
+                    return false;
+            }
         }
         public void AddUserToProject(string userId, int projectId) 
         {

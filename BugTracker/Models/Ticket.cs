@@ -11,17 +11,11 @@ namespace BugTracker.Models
 
         #region Parents/Children Relationships
         public int ProjectId { get; set; }
-        
         public int TicketPriorityId { get; set; }
-        
         public int TicketStatusId { get; set; }
-      
         public int TicketTypeId { get; set; }
-
         public string SubmitterId { get; set; }
         public string DeveloperId { get; set; }
-
-
         #endregion
 
 

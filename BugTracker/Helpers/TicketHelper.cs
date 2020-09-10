@@ -37,6 +37,62 @@ namespace BugTracker.Helpers
             }
             return tickets;
         }
+        public List<Ticket> ListMyTicketsByPriority(string priority)
+        {
+            var myTickets = new List<Ticket>();
+            var userId = HttpContext.Current.User.Identity.GetUserId();
+            var user = db.Users.Find(userId);
+            var myRole = userRoleHelper.ListUserRoles(userId).FirstOrDefault();
+            switch (myRole)
+            {
+                case "Admin":
+                case "DemoAdmin":
+                    myTickets.AddRange(db.Tickets.Where(t => t.TicketPriority.Name == priority));
+                    break;
+                case "Project Manager":
+                case "DemoProjectManager":
+                    myTickets.AddRange(user.Projects.Where(p => p.IsArchived == false).SelectMany(p => p.Tickets.Where(t => t.TicketPriority.Name == priority)));
+                    break;
+                case "Developer":
+                case "DemoDeveloper":
+                    myTickets.AddRange(db.Tickets.Where(t => t.IsArchived == false).Where(t => t.TicketPriority.Name == priority).Where(t => t.DeveloperId == userId));
+                    break;
+                case "Submitter":
+                case "DemoSubmitter":
+                    myTickets.AddRange(db.Tickets.Where(t => t.IsArchived == false).Where(t => t.TicketPriority.Name == priority).Where(t => t.SubmitterId == userId));
+                    break;
+            }
+            return myTickets;
+        }
+
+        public List<Ticket> ListUnassignedTickets(string unassigned)
+        {
+            var myTickets = new List<Ticket>();
+            var userId = HttpContext.Current.User.Identity.GetUserId();
+            var user = db.Users.Find(userId);
+            var myRole = userRoleHelper.ListUserRoles(userId).FirstOrDefault();
+            switch (myRole)
+            {
+                case "Admin":
+                case "DemoAdmin":
+                    myTickets.AddRange(db.Tickets.Where(t => t.TicketPriority.Name == unassigned));
+                    break;
+                case "Project Manager":
+                case "DemoProjectManager":
+                    myTickets.AddRange(user.Projects.Where(p => p.IsArchived == false).SelectMany(p => p.Tickets.Where(t => t.TicketPriority.Name == unassigned)));
+                    break;
+                case "Developer":
+                case "DemoDeveloper":
+                    myTickets.AddRange(db.Tickets.Where(t => t.IsArchived == false).Where(t => t.TicketPriority.Name == unassigned).Where(t => t.DeveloperId == userId));
+                    break;
+                case "Submitter":
+                case "DemoSubmitter":
+                    myTickets.AddRange(db.Tickets.Where(t => t.IsArchived == false).Where(t => t.TicketPriority.Name == unassigned).Where(t => t.SubmitterId == userId));
+                    break;
+            }
+            return myTickets;
+        }
+
         public bool CanMakeComment(int ticketId)
         {
             var userId = HttpContext.Current.User.Identity.GetUserId();

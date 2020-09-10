@@ -12,26 +12,33 @@
     }
 </style>
 
-<h2>Manage Roles</h2>
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    <div class="row">
-        <div class="col-md-8">
-            @Html.ListBox("UserIds")
-        </div>
-        <div class="col-md-4">
-            @Html.DropDownList("RoleName", "--no role--")
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <button type="submit" class="btn btn-primary" style="width:100%">Manage Role Assignment(s)</button>
-        </div>
-    </div>
-}
+<h1 class="m-0 text-dark" style="font-size:400%; text-align:center"><b>Assign Users to Roles</b></h1>
 <hr />
+<div class="col-lg-6 col-6 offset-3">
+    <div class="small-box elevation-2" style="background-color: #ffa372;
+        color: white">
+        <div class="inner">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="col-md-8">
+                        @Html.ListBox("UserIds")
+                    </div>
+                    <div class="col-md-4">
+                        @Html.DropDownList("RoleName", "--no role--")
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" class="btn btn-dark" style="width:100%">Manage Role Assignment(s)</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
 <table class="table">
     <tr>
         <th>
@@ -52,7 +59,7 @@
             </td>
         </tr>
     }
-    </table>
+</table>
 
 @section scripts {
     <script>
@@ -67,4 +74,4 @@
         }
     </script>
 
-    }
+}

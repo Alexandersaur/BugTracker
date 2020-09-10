@@ -179,7 +179,7 @@
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <li class="nav-item has-treeview menu-open">
+                        <li class="nav-item">
                             <p>
                                 @if (Request.IsAuthenticated)
                                 {
@@ -187,8 +187,9 @@
                                     {
                                         @Html.AntiForgeryToken()
                                         <ul class="nav navbar-nav">
-                                            <li>
-                                                @Html.ActionLink("Hello " + User.Identity.Name + "!", null, null, htmlAttributes: new { @id = "fullEmail", @class = "text-black" })
+                                            <li style="color:lightgray">
+                                                @*@Html.ActionLink("Hello " + User.Identity.Name + "!", null, null, htmlAttributes: new { @id = "fullEmail", @class = "text-black" })*@
+                                                Hello @userHelper.LastNameFirst(User.Identity.GetUserId()) !
 
                                             </li>
                                         </ul>
@@ -338,7 +339,7 @@
                                         @*<i class="nav-icon fas fa-crosshairs"></i>*@
                                         <p>
                                             <a class="h6" href="javascript:document.getElementById('sideLogoutForm').submit()"> Log off <i class="fas fa-sign-out-alt text-black mt-3"></i></a>
-                                            <i class="fas fa-angle-left right"></i>
+                                            @*<i class="fas fa-angle-left right"></i>*@
                                         </p>
                                     </div>
                                 }

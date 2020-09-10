@@ -1,5 +1,7 @@
-﻿using BugTracker.Models;
+﻿using BugTracker.Helpers;
+using BugTracker.Models;
 using BugTracker.ViewModels;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +13,9 @@ namespace BugTracker.Controllers
     public class MorrisChartsController : Controller
     {    
         private ApplicationDbContext db = new ApplicationDbContext();
+        private TicketHelper ticketHelper = new TicketHelper();
+        private ProjectHelper projectHelper = new ProjectHelper();
+
 
         //This is a list of morris chart data
         //data: [

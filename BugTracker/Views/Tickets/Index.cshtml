@@ -13,15 +13,15 @@
 
 <h1 class="m-0 text-dark" style="font-size:400%; text-align:center"><b>Tickets Index</b></h1>
 @*@if (User.IsInRole("Submitter"))*@
-<p>
-    @Html.ActionLink("Create New", "Create")
+<p style="text-align:center">
+    @Html.ActionLink("Create New Ticket", "Create", "Tickets", null, new { @class = "btn btn-dark" })
 </p>
 
 
 
-<hr />
-<h2>All Tickets</h2>
-<hr />
+@*<hr />*@
+<h2 style="text-align:center">All Tickets</h2>
+@*<hr />*@
 
 <table class="table" id="alltable">
     <thead>
@@ -50,15 +50,15 @@
             <th>
                 Created
             </th>
-            <th>
+            @*<th>
                 Updated
-            </th>
+            </th>*@
             <th>
                 Resolved
             </th>
-            <th>
+            @*<th>
                 Archived
-            </th>
+            </th>*@
         </tr>
     </thead>
     <tbody>
@@ -96,25 +96,25 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Created)
                 </td>
-                <td>
+                @*<td>
                     @Html.DisplayFor(modelItem => item.Updated)
-                </td>
+                </td>*@
                 <td>
                     @Html.DisplayFor(modelItem => item.IsResolved)
                 </td>
-                <td>
+                @*<td>
                     @Html.DisplayFor(modelItem => item.IsArchived)
-                </td>
+                </td>*@
             </tr>
         }
     </tbody>
 </table>
 
-@*@if (Model.MyTickets.Count > 0)
+@if (Model.MyTickets.Count > 0)
     {
         <hr />
-        <h2>My Tickets</h2>
-        <hr />
+        <h2 style="text-align:center">My Tickets</h2>
+        @*<hr />*@
 
         <table class="table" id="mytable">
             <thead>
@@ -143,15 +143,15 @@
                     <th>
                         Created
                     </th>
-                    <th>
+                    @*<th>
                         Updated
-                    </th>
+                    </th>*@
                     <th>
                         IsResolved
                     </th>
-                    <th>
+                    @*<th>
                         IsArchived
-                    </th>
+                    </th>*@
                     <th></th>
                 </tr>
             </thead>
@@ -183,15 +183,15 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Created)
                         </td>
-                        <td>
+                        @*<td>
                             @Html.DisplayFor(modelItem => item.Updated)
-                        </td>
+                        </td>*@
                         <td>
                             @Html.DisplayFor(modelItem => item.IsResolved)
                         </td>
-                        <td>
+                        @*<td>
                             @Html.DisplayFor(modelItem => item.IsArchived)
-                        </td>
+                        </td>*@
                     </tr>
                 }
             </tbody>
@@ -200,4 +200,4 @@
     else
     {
         <h2>You have no tickets. </h2>
-    }*@
+    }

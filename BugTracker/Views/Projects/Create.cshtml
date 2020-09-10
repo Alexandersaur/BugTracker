@@ -4,16 +4,23 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h1 class="m-0 text-dark" style="font-size:400%; text-align:center"><b>Create New Project</b></h1>
+<hr/>
 
+    <div class="col-lg-4 col-6 offset-4">
+        <div class="small-box elevation-2" style="background-color: #43658b;
+        color: white">
+            <div class="inner">
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
+
+
+
+
     <div class="form-horizontal">
-        <h4>Project</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -41,6 +48,10 @@
     </div>
 }
 
+            </div>
+        </div>
+    </div>
+<hr/>
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>

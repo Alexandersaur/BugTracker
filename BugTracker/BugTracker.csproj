@@ -190,10 +190,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Helpers\FileStamp.cs" />
     <Compile Include="Helpers\FileUploadValidator.cs" />
     <Compile Include="Helpers\HistoryHelper.cs" />
+    <Compile Include="Helpers\NotificationHelper.cs" />
     <Compile Include="Helpers\ProjectHelper.cs" />
+    <Compile Include="Helpers\SlugMaker.cs" />
     <Compile Include="Helpers\StringUtilities.cs" />
     <Compile Include="Helpers\TicketHelper.cs" />
     <Compile Include="Helpers\UserHelper.cs" />

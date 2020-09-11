@@ -18,6 +18,9 @@
     var ticketHelper = new TicketHelper();
     var userHelper = new UserHelper();
     var userRoleHelper = new UserRoleHelper();
+    var notificationHelper = new NotificationHelper();
+
+
 
     if (User.Identity.GetUserId() != null)
     {
@@ -179,30 +182,34 @@
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <li class="nav-item">
-                            <p>
-                                @if (Request.IsAuthenticated)
-                                {
-                                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-                                    {
-                                        @Html.AntiForgeryToken()
-                                        <ul class="nav navbar-nav">
-                                            <li style="color:lightgray">
-                                                @*@Html.ActionLink("Hello " + User.Identity.Name + "!", null, null, htmlAttributes: new { @id = "fullEmail", @class = "text-black" })*@
-                                                Hello @userHelper.LastNameFirst(User.Identity.GetUserId()) !
+                        @*<li class="nav-item">
+            @if (Request.IsAuthenticated)
+            {
+                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <ul class="nav navbar-nav">
+                        <li style="color:lightgray">
+                            @Html.ActionLink("Hello " + User.Identity.Name + "!", null, null, htmlAttributes: new { @id = "fullEmail", @class = "text-black" })
+                            Hello @userHelper.LastNameFirst(User.Identity.GetUserId()) !
 
-                                            </li>
-                                        </ul>
-                                    }
-                                }
-                                else
-                                {
-                                    <ul class="nav navbar-nav navbar-right">
-                                        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "text-black" })</li>
-                                        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "text-black" })</li>
-                                    </ul>
-                                }
-                            </p>
+                        </li>
+                    </ul>
+                }
+            }
+            else
+            {
+                <ul class="nav navbar-nav navbar-right">
+                    <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "text-black" })</li>
+                    <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "text-black" })</li>
+                </ul>
+            }
+        </li>*@
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="far fa-folder nav-icon"></i>
+                                <p>Hello @userHelper.LastNameFirst(User.Identity.GetUserId())!</p>
+                            </a>
                         </li>
                         <hr />
                         <li class="nav-item">
@@ -210,6 +217,57 @@
                                 <i class="far fa-bell nav-icon"></i>
                                 <p>Notifications</p>
                             </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="mdi mdi-message-alert"></i>
+                                @{ 
+                                   var unreadNotifications = new List<BugTracker.Models.TicketNotification>();
+                                   unreadNotifications = notificationHelper.ListUserUnreadNotifications(); }
+                                @if (unreadNotifications != null)
+                                {
+                    <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>}
+                            </a>
+                            <div class="dropdown-menu mailbox animated slideInUp">
+                                <ul>
+                                    @if (unreadNotifications == null)
+                                    {
+                        <li>
+                            <div class="drop-title">There are no Unread Notifications</div>
+                        </li> }
+                                    else
+                                    {
+                        <li>
+                            <div class="drop-title">Unread Notifications</div>
+                        </li>
+                                        <li>
+                                            <div class="message-center">
+                                                @foreach (var notifies in unreadNotifications)
+                                                {@*<a href="@Url.Action("Manage", "Users", new { userId = item.Id })">*@ @*I need to figure out where to go if they click on this. *@ @*<a href="#">*@
+                                                                    <a alt="default"
+                                                                       data-toggle="modal"
+                                                                       data-target="#notification-modal-@notifies.Id"
+                                                                       class="model_img img-responsive">
+                                                                        <div class="row">
+                                                                            <div col-3>
+                                                                                <div class="btn btn-danger btn-circle mx-2"><i class="fa fa-exclamation"></i></div>
+                                                                            </div>
+                                                                            <div col-9>
+                                                                                <div class="mail-content">
+                                                                                    <h5>@notifies.Subject</h5>
+                                                                                    @*<span class="mail-desc">@notifies.Message</span>*@
+                                                                                    <span class="time">@notifies.Created.ToString("dd MMM yyyy")</span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </a>}
+                                            </div>
+                                        </li>
+                                                        <li>
+                                                            <a class="nav-link text-center" href="javascript:void(0);"> <strong>Check all notifications</strong> <i class="fa fa-angle-right"></i> </a>
+                                                        </li>}
+                                </ul>
+                            </div>
                         </li>
                         <hr />
                         <li class="nav-item has-treeview">
@@ -248,7 +306,7 @@
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon fas fa-edit"></i>
                                     <p>
-                                        Project Manager Actions
+                                        Proj Manager Actions
                                         <i class="fas fa-angle-left right"></i>
                                     </p>
                                 </a>
@@ -337,8 +395,10 @@
                                     @Html.AntiForgeryToken()
                                     <div class="nav-link">
                                         @*<i class="nav-icon fas fa-crosshairs"></i>*@
+                                        <i class="fas fa-sign-out-alt text-light mt-3"></i>
+
                                         <p>
-                                            <a class="h6" href="javascript:document.getElementById('sideLogoutForm').submit()"> Log off <i class="fas fa-sign-out-alt text-black mt-3"></i></a>
+                                            <a class="h6" href="javascript:document.getElementById('sideLogoutForm').submit()">   Log off </a>
                                             @*<i class="fas fa-angle-left right"></i>*@
                                         </p>
                                     </div>

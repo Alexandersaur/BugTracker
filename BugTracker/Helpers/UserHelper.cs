@@ -20,7 +20,11 @@ namespace BugTracker.Helpers
                 return firstName + " " + lastName;
             }
 
-            public string LastNameFirst(string userId)
+        public ApplicationUser getUser(string userId)
+        {
+            return db.Users.Find(userId);
+        }
+        public string LastNameFirst(string userId)
             {
                 var user = db.Users.Find(userId);
                 return user.FullName;

@@ -4,14 +4,16 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h1 class="m-0 text-dark" style="font-size:400%; text-align:center"><b>Projects Index</b></h1>
+<br />
 
-@if (User.IsInRole("Admin") || User.IsInRole("ProjectManager")) 
-    { 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-    }
+@if (User.IsInRole("Admin") || User.IsInRole("ProjectManager"))
+{
+    <p style="text-align:center">
+        @Html.ActionLink("Create New Project", "Create", "Projects", null, new { @class = "btn btn-dark" })
+    </p>
+}
+
 <table class="table">
     <thead>
         <tr>
@@ -42,7 +44,6 @@
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                 </td>
             </tr>

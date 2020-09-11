@@ -23,7 +23,7 @@
 <div class="content-header">
     <div class="container-fluid">
         <div class="col">
-            <h1 class="m-0 text-dark" style="font-size:400%; text-align:center"><b>Dashboard</b></h1>
+            <h1 class="m-0 text-dark" style="font-size:400%; text-align:center"><b>User Dashboard</b></h1>
         </div><!-- /.col -->
         @*<div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -69,20 +69,20 @@
                         <div class="icon">
                             @*<i class="ion ion-stats-bars"></i>*@
                         </div>
-                        <a href="@Url.Action("Create", "Projects")" class="small-box-footer">Create! <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="@Url.Action("Create", "Projects")" class="small-box-footer"><i><b>Create!</b></i> <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-6">
                     <div class="small-box" style="background-color: #ed6663; color:white">
                         <div class="inner">
-                            <h3>Create Ticket</h3>
+                            <h3>Create Tickets</h3>
                             <p>Creates a new Ticket that describes a single issue needing to be addressed within a Project</p>
                             <p>Example: an email subscription link was found not to be working correctly</p>
                         </div>
                         <div class="icon">
                             @*<i class="ion ion-person-add"></i>*@
                         </div>
-                        <a href="@Url.Action("Create", "Tickets")" class="small-box-footer">Create! <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="@Url.Action("Create", "Tickets")" class="small-box-footer"><b><i>Create!</i></b> <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-6">
@@ -96,7 +96,7 @@
                         <div class="icon">
                             @*<i class="ion ion-pie-graph"></i>*@
                         </div>
-                        <a href="@Url.Action("ManageRoles", "Assignments")" class="small-box-footer">Assign! <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="@Url.Action("ManageRoles", "Assignments")" class="small-box-footer"><b><i>Assign!</i></b> <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -132,13 +132,13 @@
                         <div class="icon">
                             @*<i class="ion ion-stats-bars"></i>*@
                         </div>
-                        <a href="@Url.Action("Create", "Projects")" class="small-box-footer">Create! <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="@Url.Action("Create", "Projects")" class="small-box-footer"><b><i>Create!</i></b> <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-6">
                     <div class="small-box" style="background-color: #ed6663; color:white">
                         <div class="inner">
-                            <h3>Edit Ticket</h3>
+                            <h3>Edit Tickets</h3>
 
                             <p>Edits a Ticket within a Project that the Proj. Manager is assigned to</p>
                             <p>Example: the priority and status of a Ticket need to be added or updated</p>
@@ -146,7 +146,7 @@
                         <div class="icon">
                             @*<i class="ion ion-person-add"></i>*@
                         </div>
-                        <a href="@Url.Action("Index", "Tickets")" class="small-box-footer">Edit! <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="@Url.Action("Index", "Tickets")" class="small-box-footer"><b><i>Edit!</i></b> <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-6">
@@ -161,7 +161,7 @@
                         <div class="icon">
                             @*<i class="ion ion-pie-graph"></i>*@
                         </div>
-                        <a href="@Url.Action("ManageRoles", "Assignments")" class="small-box-footer">Assign! <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="@Url.Action("ManageRoles", "Assignments")" class="small-box-footer"><b><i>Assign!</i></b> <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -188,7 +188,7 @@
                     <div class="small-box" style="background-color:#43658b; color:white">
                         <div class="inner">
 
-                            <h3>View Project</h3>
+                            <h3>View Projects</h3>
 
                             <p>Views the Projects that have been assiged to the Developer</p>
                             <p>Example: once assigned, a Developer can now see the Projects they previously couldn't</p>
@@ -197,13 +197,13 @@
                         <div class="icon">
                             @*<i class="ion ion-stats-bars"></i>*@
                         </div>
-                        <a href="@Url.Action("Index", "Projects")" class="small-box-footer">View! <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="@Url.Action("Index", "Projects")" class="small-box-footer"><b><i>View!</i></b> <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-6">
                     <div class="small-box" style="background-color: #ed6663; color:white">
                         <div class="inner">
-                            <h3>View Ticket</h3>
+                            <h3>View Tickets</h3>
                             <p>Views the Tickets that have been assigned to the Developer</p>
                             <p>Example: once assigned, a Developer can now see the history and status of their assigned Tickets</p>
 
@@ -211,7 +211,7 @@
                         <div class="icon">
                             @*<i class="ion ion-person-add"></i>*@
                         </div>
-                        <a href="@Url.Action("Index", "Tickets")" class="small-box-footer">View! <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="@Url.Action("Index", "Tickets")" class="small-box-footer"><b><i>View!</i></b> <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 @*<div class="col-lg-3 col-6">
@@ -232,66 +232,68 @@
         }
         @if (User.IsInRole("Submitter"))
         {
-            <div class="row">
-                <div class="col-lg-3 col-6">
-                    <div class="small-box" style="background-color:#4e89ae; color:white">
-                        <div class="inner">
+    <div class="row">
+        <div class="col-lg-3 col-6">
+            <div class="small-box" style="background-color:#4e89ae; color:white">
+                <div class="inner">
 
-                            <h3>Submitter</h3>
-                            <p>The submitter can create new Tickets and view the Tickets they have created</p>
-                            <p>They can also view Projects that their Tickets have been assigned to</p>
+                    <h3>Submitter</h3>
+                    <p>The submitter can create new Tickets and view the Tickets they have created</p>
+                    <p>They can also view Projects that their Tickets have been assigned to</p>
 
-                        </div>
-                        <div class="icon">
-                            @*<i class="ion ion-bag"></i>*@
-                        </div>
-                        @*<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>*@
-                    </div>
                 </div>
-                <div class="col-lg-3 col-6">
-                    <div class="small-box" style="background-color:#43658b; color:white">
-                        <div class="inner">
-
-                            <h3>Create Ticket</h3>
-
-                            <p>Creates a new Ticket that describes a single issue needing to be addressed within a Project</p>
-                            <p>Example: an email subscription link was found not to be working correctly</p>
-
-                        </div>
-                        <div class="icon">
-                            @*<i class="ion ion-stats-bars"></i>*@
-                        </div>
-                        <a href="@Url.Action("Create", "Ticket")" class="small-box-footer">Create! <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
+                <div class="icon">
+                    @*<i class="ion ion-bag"></i>*@
                 </div>
-                <div class="col-lg-3 col-6">
-                    <div class="small-box" style="background-color: #ed6663; color:white">
-                        <div class="inner">
-                            <h3>View Tickets</h3>
-                            <p>Views the Tickets that have been submitted by the Submitter</p>
-                            <p>Example: once created, a Submitter can view the status of their submitted Tickets</p>
-                        </div>
-                        <div class="icon">
-                            @*<i class="ion ion-person-add"></i>*@
-                        </div>
-                        <a href="@Url.Action("Index", "Tickets")" class="small-box-footer">View! <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-6">
-                    <div class="small-box" style="background-color: #ffa372; color:white">
-                        <div class="inner">
-                            <h3>View Projects</h3>
-                            <p>Views the Projects that have been submitted by the Submitter</p>
-                            <p>Example: once created, a Submitter can view only the Projects that they have created</p>
-
-                        </div>
-                        <div class="icon">
-                            @*<i class="ion ion-pie-graph"></i>*@
-                        </div>
-                        <a href="@Url.Action("Index", "Projects")" class="small-box-footer">View! <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
+                @*<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>*@
             </div>
+        </div>
+        <div class="col-lg-3 col-6">
+            <div class="small-box" style="        background-color: #43658b;
+        color: white">
+                <div class="inner">
+                    <h3>View Tickets</h3>
+                    <p>Views the Tickets that have been submitted by the Submitter</p>
+                    <p>Example: once created, a Submitter can view the status of their submitted Tickets</p>
+                </div>
+                <div class="icon">
+                    @*<i class="ion ion-person-add"></i>*@
+                </div>
+                <a href="@Url.Action("Index", "Tickets")" class="small-box-footer"><b><i>View!</i></b> <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-6">
+            <div class="small-box" style="        background-color: #ed6663;
+        color: white">
+                <div class="inner">
+
+                    <h3>Create Tickets</h3>
+
+                    <p>Creates a new Ticket that describes a single issue needing to be addressed within a Project</p>
+                    <p>Example: an email subscription link was found not to be working correctly</p>
+
+                </div>
+                <div class="icon">
+                    @*<i class="ion ion-stats-bars"></i>*@
+                </div>
+                <a href="@Url.Action("Create", "Tickets")" class="small-box-footer"><b><i>Create!</i></b> <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-6">
+            <div class="small-box" style="background-color: #ffa372; color:white">
+                <div class="inner">
+                    <h3>View Projects</h3>
+                    <p>Views the Projects that have been submitted by the Submitter</p>
+                    <p>Example: once created, a Submitter can view only the Projects that they have created</p>
+
+                </div>
+                <div class="icon">
+                    @*<i class="ion ion-pie-graph"></i>*@
+                </div>
+                <a href="@Url.Action("Index", "Projects")" class="small-box-footer"><b><i>View!</i></b> <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+    </div>
         }
 
 
@@ -316,21 +318,25 @@
 
 
 
-<div class="container-fluid">
+
+@*<div class="container-fluid">
     <div class="row">
         <div class="col">
             <div class="info-box">
-                <!-- Apply any bg-* class to to the icon to color it -->
+                 Apply any bg-* class to to the icon to color it 
                 <span class="info-box-icon bg-red"><i class="fas fa-fire"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">Projects</span>
                     <span class="info-box-number">@Model.Projects.Count()</span>
                 </div>
-                <!-- /.info-box-content -->
+                 /.info-box-content 
             </div>
         </div>
     </div>
-</div>
+</div>*@
+
+
+
 
 
 @*@using (Html.BeginForm("Create", "Projects", FormMethod.Post))
@@ -421,45 +427,48 @@
     </tbody>
 </table>*@
 
-@if (User.IsInRole("Admin") || User.IsInRole("DemoAdmin") || User.IsInRole("ProjectManager") || User.IsInRole("DemoPM"))
+
+
+
+@*@if (User.IsInRole("Admin") || User.IsInRole("DemoAdmin") || User.IsInRole("ProjectManager") || User.IsInRole("DemoPM"))
 {
     <div class="container-fluid">
         <div class="row">
             <div class="col">
                 <div class="info-box">
-                    <!-- Apply any bg-* class to to the icon to color it -->
+                     Apply any bg-* class to to the icon to color it 
                     <span class="info-box-icon bg-red"><i class="fas fa-fire"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text">High Priority Tickets</span>
-                        @*<span class="info-box-number">@Model.HighPriorityTicketCount</span>*@
+                        <span class="info-box-number">@Model.HighPriorityTicketCount</span>
                     </div>
-                    <!-- /.info-box-content -->
+                     /.info-box-content 
                 </div>
             </div>
             <div class="col">
-                <!-- /.info-box -->
+                 /.info-box 
                 <div class="info-box">
-                    <!-- Apply any bg-* class to to the icon to color it -->
+                     Apply any bg-* class to to the icon to color it 
                     <span class="info-box-icon bg-orange"><i class="fas fa-exclamation-triangle"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text">Unassigned Tickets</span>
-                        @*<span class="info-box-number">@Model.UnassignedTicketCount</span>*@
+                        <span class="info-box-number">@Model.UnassignedTicketCount</span>
                     </div>
-                    <!-- /.info-box-content -->
+                     /.info-box-content 
                 </div>
             </div>
             <div class="col">
-                <!-- /.info-box -->
+                 /.info-box 
                 <div class="info-box">
-                    <!-- Apply any bg-* class to to the icon to color it -->
+                     Apply any bg-* class to to the icon to color it 
                     <span class="info-box-icon bg-green"><i class="fas fa-check"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text">Resolved Tickets Last 7 days</span>
-                        @*<span class="info-box-number">@Model.RecentResolvedCount</span>*@
+                        <span class="info-box-number">@Model.RecentResolvedCount</span>
                     </div>
-                    <!-- /.info-box-content -->
+                     /.info-box-content 
                 </div>
-                <!-- /.info-box -->
+                 /.info-box 
             </div>
         </div>
     </div>}
@@ -469,39 +478,39 @@
         <div class="row">
             <div class="col">
                 <div class="info-box">
-                    <!-- Apply any bg-* class to to the icon to color it -->
+                     Apply any bg-* class to to the icon to color it 
                     <span class="info-box-icon bg-green"><i class="fas fa-book"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text">Active Projects</span>
-                        @*<span class="info-box-number">@Model.AssignedProjectCount</span>*@
+                        <span class="info-box-number">@Model.AssignedProjectCount</span>
                     </div>
-                    <!-- /.info-box-content -->
+                     /.info-box-content 
                 </div>
             </div>
             <div class="col">
-                <!-- /.info-box -->
+                 /.info-box 
                 <div class="info-box">
-                    <!-- Apply any bg-* class to to the icon to color it -->
+                     Apply any bg-* class to to the icon to color it 
                     <span class="info-box-icon bg-orange"><i class="fas fa-tag"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text">Assigned Tickets</span>
-                        @*<span class="info-box-number">@Model.AssignedTicketCount</span>*@
+                        <span class="info-box-number">@Model.AssignedTicketCount</span>
                     </div>
-                    <!-- /.info-box-content -->
+                     /.info-box-content 
                 </div>
             </div>
             <div class="col">
-                <!-- /.info-box -->
+                 /.info-box 
                 <div class="info-box">
-                    <!-- Apply any bg-* class to to the icon to color it -->
+                     Apply any bg-* class to to the icon to color it 
                     <span class="info-box-icon bg-red"><i class="fas fa-exclamation-circle"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text">High Priority Tickets</span>
-                        @*<span class="info-box-number">@Model.HighPriorityTicketCount</span>*@
+                        <span class="info-box-number">@Model.HighPriorityTicketCount</span>
                     </div>
-                    <!-- /.info-box-content -->
+                     /.info-box-content 
                 </div>
-                <!-- /.info-box -->
+                 /.info-box 
             </div>
         </div>
     </div>}
@@ -511,30 +520,33 @@
         <div class="row">
             <div class="col">
                 <div class="info-box">
-                    <!-- Apply any bg-* class to to the icon to color it -->
+                     Apply any bg-* class to to the icon to color it 
                     <span class="info-box-icon bg-green"><i class="fas fa-book"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text">Active Projects</span>
-                        @*<span class="info-box-number">@Model.AssignedProjectCount</span>*@
+                        <span class="info-box-number">@Model.AssignedProjectCount</span>
                     </div>
-                    <!-- /.info-box-content -->
+                     /.info-box-content 
                 </div>
             </div>
             <div class="col">
-                <!-- /.info-box -->
+                 /.info-box 
                 <div class="info-box">
-                    <!-- Apply any bg-* class to to the icon to color it -->
+                     Apply any bg-* class to to the icon to color it 
                     <span class="info-box-icon bg-green"><i class="fas fa-tag"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text">Submitted Tickets</span>
-                        @*<span class="info-box-number">@Model.SubmittedTicketCount</span>*@
+                        <span class="info-box-number">@Model.SubmittedTicketCount</span>
                     </div>
-                    <!-- /.info-box-content -->
+                     /.info-box-content 
                 </div>
             </div>
         </div>
     </div>
-}
+}*@
+
+
+
 
 <div class="container-fluid">
     <div class="row">
@@ -556,7 +568,7 @@
     </div>
 </div>
 
-<section id="Ajax">
+@*<section id="Ajax">
     <div class="row">
         <div id="priorityChart" class="col-md-4 chart"></div>
         <div class="row">
@@ -567,7 +579,7 @@
         </div>
         <div id="statusChart" class="col-md-4 chart"></div>
         <div id="typeChart" class="col-md-4 chart"></div>
-    </div>
+    </div>*@
 
     @section scripts{
         <script>

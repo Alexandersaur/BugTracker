@@ -5,56 +5,57 @@
 }
 
 <h1 class="m-0 text-dark" style="font-size:400%; text-align:center"><b>Create New Project</b></h1>
-<hr/>
+<hr />
 
-    <div class="col-lg-4 col-6 offset-4">
-        <div class="small-box elevation-2" style="background-color: #43658b;
+<div class="col-lg-6 col-6 offset-3">
+    <div class="small-box elevation-2" style="background-color: #43658b;
         color: white">
-            <div class="inner">
+        <div class="inner">
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
 
 
 
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsArchived, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.IsArchived)
-                    @Html.ValidationMessageFor(model => model.IsArchived, "", new { @class = "text-danger" })
+
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.IsArchived, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.IsArchived)
+                                @Html.ValidationMessageFor(model => model.IsArchived, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Create" class="btn btn-default" />
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            }
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
         </div>
     </div>
-}
-
-            </div>
-        </div>
-    </div>
-<hr/>
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
+<hr />
+<p style="text-align:center">
+    @Html.ActionLink("Projects Index", "Index", "Projects", null, new { @class = "btn btn-dark" })
+</p>
+<br />
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

@@ -11,7 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace AphidBT.Helpers
+namespace BugTracker.Helpers
 {
     public class NotificationHelper
     {

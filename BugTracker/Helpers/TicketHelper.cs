@@ -182,8 +182,8 @@ namespace BugTracker.Helpers
                     Subject = $"You have been assigned to Ticket Id: {newTicket.Id}",
                     Message = $"Heads up {newTicket.Developer.FullName}, you have been assigned to Ticket Id {newTicket.Id} with the following issue: '{newTicket.Issue}', on Project '{newTicket.Project.Name}'"
                 };
-            db.TicketNotifications.Add(newNotification);
-            db.SaveChanges();
+                db.TicketNotifications.Add(newNotification);
+                db.SaveChanges();
             }
             //Scenario 2: an unassignment - oldTicket.DeveloperId was not null, and new Ticket.DeveloperId is null
             if (oldTicket.DeveloperId != newTicket.DeveloperId && oldTicket.DeveloperId != null)

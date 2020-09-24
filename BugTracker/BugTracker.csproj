@@ -237,8 +237,17 @@
     <Content Include="fonts\fa-solid-900.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Images\augustine-wong-li0iC0rjvvg-unsplash.jpg" />
     <Content Include="Images\BugZapLogo.png" />
     <Content Include="Images\default_avatar.png" />
+    <Content Include="Images\pexels-lukas-917463.jpg" />
+    <Content Include="Images\Untitled_Artwork 1.png" />
+    <Content Include="Images\Untitled_Artwork 2.png" />
+    <Content Include="Images\Untitled_Artwork 3.png" />
+    <Content Include="Images\Untitled_Artwork 4.png" />
+    <Content Include="Images\Untitled_Artwork 5.png" />
+    <Content Include="Images\Untitled_Artwork 6.png" />
+    <Content Include="Images\Untitled_Artwork.png" />
     <Content Include="Scripts\adminlte.js" />
     <Content Include="Scripts\adminlte.min.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />

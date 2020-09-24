@@ -13,6 +13,7 @@ using System.Net.Mail;
 using System.Web.Configuration;
 using System.IO;
 using BugTracker.Helpers;
+using static System.Net.WebRequestMethods;
 
 namespace BugTracker.Controllers
 {
@@ -62,6 +63,10 @@ namespace BugTracker.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                HttpContext.GetOwinContext().Authentication.SignOut();
+            }
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -73,6 +78,10 @@ namespace BugTracker.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                HttpContext.GetOwinContext().Authentication.SignOut();
+            }
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -103,6 +112,10 @@ namespace BugTracker.Controllers
         {
             var email = WebConfigurationManager.AppSettings[emailKey];
             var password = WebConfigurationManager.AppSettings["DemoPassword"];
+            if (User.Identity.IsAuthenticated)
+            {
+                HttpContext.GetOwinContext().Authentication.SignOut();
+            }
             var result = await SignInManager.PasswordSignInAsync(email, password, false, shouldLockout: false);
             switch (result)
             {
@@ -119,6 +132,10 @@ namespace BugTracker.Controllers
         [AllowAnonymous]
         public ActionResult DemoLogin()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            }
             return View();
         }
 

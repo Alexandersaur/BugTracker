@@ -23,14 +23,31 @@
     <link href="~/Content/adminlte.min.css" rel="stylesheet" />
     <!-- Google Font: Source Sans Pro -->
     <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <style>
+        .register-page {
+            background-image: url('../../images/pexels-lukas-917463.jpg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
 </head>
 <body class="hold-transition register-page">
     <div class="register-box">
-        <div class="register-logo">
-            <b>BugZapper</b>JS
-        </div>
 
         <div class="card">
+            <div class="login-logo">
+                <img src="~/Images/BugZapLogo.png" alt="BugZap JS Logo" class="brand-image"
+                     style="
+                    opacity: .8;
+                    border-radius: 15%;
+                    display: block;
+                    width: 25%;
+                    display: inline-block;
+                    margin-left: auto;
+                    /*margin-right: auto*/">
+                <b style="display: inline-block; margin-right: auto; font-weight:900">BugZap</b>JS
+            </div>
             <div class="card-body register-card-body">
                 <section id="loginForm">
                     @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
@@ -48,7 +65,7 @@
                             </div>
                             @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
                         </div>
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
                         <div class="input-group mb-3">
                             <input type="text" class="form-control" name="LastName" placeholder="LastName">
                             <div class="input-group-append">
@@ -58,7 +75,7 @@
                             </div>
                             @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
                         </div>
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
                         <div class="input-group mb-3">
                             <input type="email" class="form-control" name="Email" placeholder="Email">
                             <div class="input-group-append">
@@ -69,13 +86,13 @@
                             @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                         </div>
 
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <div class="input-group mb-3">
+                        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+                        @*<div class="input-group mb-3">
                             <input type="file" class="form-control, text-right" name="Avatar" placeholder="Avatar">
                             <div class="input-group-append">
                             </div>
                             @Html.ValidationMessageFor(m => m.Avatar, "", new { @class = "text-danger" })
-                        </div>
+                        </div>*@
                         <div class="input-group mb-3">
                             <input type="password" class="form-control" name="Password" placeholder="Password">
                             <div class="input-group-append">

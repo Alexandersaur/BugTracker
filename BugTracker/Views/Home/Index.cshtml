@@ -17,557 +17,565 @@
     .chart {
         height: 250px;
     }
+    .myindex {
+        background-image: url('../../Images/augustine-wong-li0iC0rjvvg-unsplash.jpg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
 </style>
-
-<!-- Content Header (Page header) -->
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="col">
-            <h1 class="m-0 text-dark" style="font-size:400%; text-align:center"><b>User Dashboard</b></h1>
-        </div><!-- /.col -->
-        @*<div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Dashboard v1</li>
-                </ol>
-            </div> /.col*@
-    </div><!-- /.container-fluid -->
-</div>
-<!-- /.content-header -->
-<!-- Main content -->
-
-<section class="content">
-    <div class="container-fluid">
-        @if (User.IsInRole("Admin"))
-        {
-            <div class="row">
-                <div class="col-lg-3 col-6">
-                    <div class="small-box" style="background-color:#4e89ae; color:white">
-                        <div class="inner">
-
-                            <h3>Admin</h3>
-                            <p>The Administrator can create and edit all Projects and Tickets, as well as assign all users to Projects and Tickets</p>
-                            <p>The Administrator has full access to BugZap JS software</p>
-
-                        </div>
-                        <div class="icon">
-                            @*<i class="ion ion-bag"></i>*@
-                        </div>
-                        @*<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>*@
-                    </div>
-                </div>
-                <div class="col-lg-3 col-6">
-                    <div class="small-box" style="background-color:#43658b; color:white">
-                        <div class="inner">
-
-                            <h3>Create Project</h3>
-
-                            <p>Creates a new Project that will contain all of the submitted Tickets related to it</p>
-                            <p>Example: a company has contracted you to update their CRM software</p>
-
-                        </div>
-                        <div class="icon">
-                            @*<i class="ion ion-stats-bars"></i>*@
-                        </div>
-                        <a href="@Url.Action("Create", "Projects")" class="small-box-footer"><i><b>Create!</b></i> <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-6">
-                    <div class="small-box" style="background-color: #ed6663; color:white">
-                        <div class="inner">
-                            <h3>Create Tickets</h3>
-                            <p>Creates a new Ticket that describes a single issue needing to be addressed within a Project</p>
-                            <p>Example: an email subscription link was found not to be working correctly</p>
-                        </div>
-                        <div class="icon">
-                            @*<i class="ion ion-person-add"></i>*@
-                        </div>
-                        <a href="@Url.Action("Create", "Tickets")" class="small-box-footer"><b><i>Create!</i></b> <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-6">
-                    <div class="small-box" style="background-color: #ffa372; color:white">
-                        <div class="inner">
-                            <h3>Assign Users</h3>
-                            <p>Assigns any User from within the team to be responsible for handling a Ticket </p>
-                            <p>Example: selecting four related Tickets and assigning them to a Developer</p>
-
-                        </div>
-                        <div class="icon">
-                            @*<i class="ion ion-pie-graph"></i>*@
-                        </div>
-                        <a href="@Url.Action("ManageRoles", "Assignments")" class="small-box-footer"><b><i>Assign!</i></b> <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-            </div>
-        }
-        @if (User.IsInRole("ProjectManager"))
-        {
-            <div class="row">
-                <div class="col-lg-3 col-6">
-                    <div class="small-box" style="background-color:#4e89ae; color:white">
-                        <div class="inner">
-
-                            <h3>Proj Manager</h3>
-                            <p>The Project Manager can create new Projects and assign Developers to Tickets</p>
-                            <p>They can also view and edit the Tickets for Projects they are assigned to</p>
-
-                        </div>
-                        <div class="icon">
-                            @*<i class="ion ion-bag"></i>*@
-                        </div>
-                        @*<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>*@
-                    </div>
-                </div>
-                <div class="col-lg-3 col-6">
-                    <div class="small-box" style="background-color:#43658b; color:white">
-                        <div class="inner">
-
-                            <h3>Create Project</h3>
-
-                            <p>Creates a new Project that will contain all of the submitted Tickets related to it</p>
-                            <p>Example: a company has contracted you to update their CRM software</p>
-
-                        </div>
-                        <div class="icon">
-                            @*<i class="ion ion-stats-bars"></i>*@
-                        </div>
-                        <a href="@Url.Action("Create", "Projects")" class="small-box-footer"><b><i>Create!</i></b> <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-6">
-                    <div class="small-box" style="background-color: #ed6663; color:white">
-                        <div class="inner">
-                            <h3>Edit Tickets</h3>
-
-                            <p>Edits a Ticket within a Project that the Proj. Manager is assigned to</p>
-                            <p>Example: the priority and status of a Ticket need to be added or updated</p>
-                        </div>
-                        <div class="icon">
-                            @*<i class="ion ion-person-add"></i>*@
-                        </div>
-                        <a href="@Url.Action("Index", "Tickets")" class="small-box-footer"><b><i>Edit!</i></b> <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-6">
-                    <div class="small-box" style="background-color: #ffa372; color:white">
-                        <div class="inner">
-                            <h3>Assign Users</h3>
-
-                            <p>Assigns a Developer from within the team to be responsible for handling a Ticket </p>
-                            <p>Example: selecting four related Tickets and assigning them to a Developer</p>
-
-                        </div>
-                        <div class="icon">
-                            @*<i class="ion ion-pie-graph"></i>*@
-                        </div>
-                        <a href="@Url.Action("ManageRoles", "Assignments")" class="small-box-footer"><b><i>Assign!</i></b> <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-            </div>
-        }
-        @if (User.IsInRole("Developer"))
-        {
-            <div class="row">
-                <div class="col-lg-3 col-6">
-                    <div class="small-box" style="background-color:#4e89ae; color:white">
-                        <div class="inner">
-
-                            <h3>Developer</h3>
-                            <p>The Developer can view Projects and Tickets that they have been assigned to</p>
-                            <p>They are mainly focused on resolving issues and use BugZap JS for reference</p>
-
-                        </div>
-                        <div class="icon">
-                            @*<i class="ion ion-bag"></i>*@
-                        </div>
-                        @*<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>*@
-                    </div>
-                </div>
-                <div class="col-lg-3 col-6">
-                    <div class="small-box" style="background-color:#43658b; color:white">
-                        <div class="inner">
-
-                            <h3>View Projects</h3>
-
-                            <p>Views the Projects that have been assiged to the Developer</p>
-                            <p>Example: once assigned, a Developer can now see the Projects they previously couldn't</p>
-
-                        </div>
-                        <div class="icon">
-                            @*<i class="ion ion-stats-bars"></i>*@
-                        </div>
-                        <a href="@Url.Action("Index", "Projects")" class="small-box-footer"><b><i>View!</i></b> <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-6">
-                    <div class="small-box" style="background-color: #ed6663; color:white">
-                        <div class="inner">
-                            <h3>View Tickets</h3>
-                            <p>Views the Tickets that have been assigned to the Developer</p>
-                            <p>Example: once assigned, a Developer can now see the history and status of their assigned Tickets</p>
-
-                        </div>
-                        <div class="icon">
-                            @*<i class="ion ion-person-add"></i>*@
-                        </div>
-                        <a href="@Url.Action("Index", "Tickets")" class="small-box-footer"><b><i>View!</i></b> <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                @*<div class="col-lg-3 col-6">
-                    <div class="small-box" style="background-color: #ffa372; color:white">
-                        <div class="inner">
-                            <h3>Assign Users</h3>
-                            <p>Description</p>
-                            <p>Description</p>
-
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-pie-graph"></i>
-                        </div>
-                        <a href="@Url.Action("ManageRoles", "Assignments")" class="small-box-footer">Assign! <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>*@
-            </div>
-        }
-        @if (User.IsInRole("Submitter"))
-        {
-    <div class="row">
-        <div class="col-lg-3 col-6">
-            <div class="small-box" style="background-color:#4e89ae; color:white">
-                <div class="inner">
-
-                    <h3>Submitter</h3>
-                    <p>The submitter can create new Tickets and view the Tickets they have created</p>
-                    <p>They can also view Projects that their Tickets have been assigned to</p>
-
-                </div>
-                <div class="icon">
-                    @*<i class="ion ion-bag"></i>*@
-                </div>
-                @*<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>*@
-            </div>
-        </div>
-        <div class="col-lg-3 col-6">
-            <div class="small-box" style="        background-color: #43658b;
-        color: white">
-                <div class="inner">
-                    <h3>View Tickets</h3>
-                    <p>Views the Tickets that have been submitted by the Submitter</p>
-                    <p>Example: once created, a Submitter can view the status of their submitted Tickets</p>
-                </div>
-                <div class="icon">
-                    @*<i class="ion ion-person-add"></i>*@
-                </div>
-                <a href="@Url.Action("Index", "Tickets")" class="small-box-footer"><b><i>View!</i></b> <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <div class="col-lg-3 col-6">
-            <div class="small-box" style="        background-color: #ed6663;
-        color: white">
-                <div class="inner">
-
-                    <h3>Create Tickets</h3>
-
-                    <p>Creates a new Ticket that describes a single issue needing to be addressed within a Project</p>
-                    <p>Example: an email subscription link was found not to be working correctly</p>
-
-                </div>
-                <div class="icon">
-                    @*<i class="ion ion-stats-bars"></i>*@
-                </div>
-                <a href="@Url.Action("Create", "Tickets")" class="small-box-footer"><b><i>Create!</i></b> <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <div class="col-lg-3 col-6">
-            <div class="small-box" style="background-color: #ffa372; color:white">
-                <div class="inner">
-                    <h3>View Projects</h3>
-                    <p>Views the Projects that have been submitted by the Submitter</p>
-                    <p>Example: once created, a Submitter can view only the Projects that they have created</p>
-
-                </div>
-                <div class="icon">
-                    @*<i class="ion ion-pie-graph"></i>*@
-                </div>
-                <a href="@Url.Action("Index", "Projects")" class="small-box-footer"><b><i>View!</i></b> <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
+<body >
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="col">
+                <h1 class="m-0 text-dark" style="font-size:400%; text-align:center"><b>User Dashboard</b></h1>
+            </div><!-- /.col -->
+            @*<div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Dashboard v1</li>
+                    </ol>
+                </div> /.col*@
+        </div><!-- /.container-fluid -->
     </div>
-        }
+    <!-- /.content-header -->
+    <!-- Main content -->
+
+    <section class="content">
+        <div class="container-fluid">
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="row">
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box" style="background-color:#4e89ae; height:275px; color:white">
+                            <div class="inner">
+
+                                <h3>Admin</h3>
+                                <p>The Administrator can create and edit all Projects and Tickets, as well as assign all users to Projects and Tickets</p>
+                                <p>The Administrator has full access to BugZap JS software</p>
+
+                            </div>
+                            <div class="icon">
+                                @*<i class="ion ion-bag"></i>*@
+                            </div>
+                            @*<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>*@
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box" style="background-color:#43658b; height:275px; color:white">
+                            <div class="inner">
+
+                                <h3>Create Project</h3>
+
+                                <p>Creates a new Project that will contain all of the submitted Tickets related to it</p>
+                                <p>Example: a company has contracted you to update their CRM software</p>
+
+                            </div>
+                            <div class="icon">
+                                @*<i class="ion ion-stats-bars"></i>*@
+                            </div>
+                            <a href="@Url.Action("Create", "Projects")" class="small-box-footer"><i><b>Create!</b></i> <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box" style="background-color: #ed6663; height:275px; color:white">
+                            <div class="inner">
+                                <h3>Create Tickets</h3>
+                                <p>Creates a new Ticket that describes a single issue needing to be addressed within a Project</p>
+                                <p>Example: an email subscription link was found not to be working correctly</p>
+                            </div>
+                            <div class="icon">
+                                @*<i class="ion ion-person-add"></i>*@
+                            </div>
+                            <a href="@Url.Action("Create", "Tickets")" class="small-box-footer"><b><i>Create!</i></b> <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box" style="background-color: #ffa372; height:275px; color:white">
+                            <div class="inner">
+                                <h3>Assign Users</h3>
+                                <p>Assigns any User from within the team to be responsible for handling a Ticket </p>
+                                <p>Example: selecting four related Tickets and assigning them to a Developer</p>
+
+                            </div>
+                            <div class="icon">
+                                @*<i class="ion ion-pie-graph"></i>*@
+                            </div>
+                            <a href="@Url.Action("ManageRoles", "Assignments")" class="small-box-footer"><b><i>Assign!</i></b> <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (User.IsInRole("ProjectManager"))
+            {
+                <div class="row">
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box" style="background-color:#4e89ae; height:275px;color:white">
+                            <div class="inner">
+
+                                <h3>Proj Manager</h3>
+                                <p>The Project Manager can create new Projects and assign Developers to Tickets</p>
+                                <p>They can also view and edit the Tickets for Projects they are assigned to</p>
+
+                            </div>
+                            <div class="icon">
+                                @*<i class="ion ion-bag"></i>*@
+                            </div>
+                            @*<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>*@
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box" style="background-color:#43658b; height:275px;color:white">
+                            <div class="inner">
+
+                                <h3>Create Project</h3>
+
+                                <p>Creates a new Project that will contain all of the submitted Tickets related to it</p>
+                                <p>Example: a company has contracted you to update their CRM software</p>
+
+                            </div>
+                            <div class="icon">
+                                @*<i class="ion ion-stats-bars"></i>*@
+                            </div>
+                            <a href="@Url.Action("Create", "Projects")" class="small-box-footer"><b><i>Create!</i></b> <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box" style="background-color: #ed6663;height:275px; color:white">
+                            <div class="inner">
+                                <h3>Edit Tickets</h3>
+
+                                <p>Edits a Ticket within a Project that the Proj. Manager is assigned to</p>
+                                <p>Example: the priority and status of a Ticket need to be added or updated</p>
+                            </div>
+                            <div class="icon">
+                                @*<i class="ion ion-person-add"></i>*@
+                            </div>
+                            <a href="@Url.Action("Index", "Tickets")" class="small-box-footer"><b><i>Edit!</i></b> <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box" style="background-color: #ffa372; height:275px;color:white">
+                            <div class="inner">
+                                <h3>Assign Users</h3>
+
+                                <p>Assigns a Developer from within the team to be responsible for handling a Ticket </p>
+                                <p>Example: selecting four related Tickets and assigning them to a Developer</p>
+
+                            </div>
+                            <div class="icon">
+                                @*<i class="ion ion-pie-graph"></i>*@
+                            </div>
+                            <a href="@Url.Action("ManageRoles", "Assignments")" class="small-box-footer"><b><i>Assign!</i></b> <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (User.IsInRole("Developer"))
+            {
+                <div class="row">
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box" style="background-color:#4e89ae; height:275px;color:white">
+                            <div class="inner">
+
+                                <h3>Developer</h3>
+                                <p>The Developer can view Projects and Tickets that they have been assigned to</p>
+                                <p>They are mainly focused on resolving issues and use BugZap JS for reference</p>
+
+                            </div>
+                            <div class="icon">
+                                @*<i class="ion ion-bag"></i>*@
+                            </div>
+                            @*<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>*@
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box" style="background-color:#43658b;height:275px; color:white">
+                            <div class="inner">
+
+                                <h3>View Projects</h3>
+
+                                <p>Views the Projects that have been assiged to the Developer</p>
+                                <p>Example: once assigned, a Developer can now see the Projects they previously couldn't</p>
+
+                            </div>
+                            <div class="icon">
+                                @*<i class="ion ion-stats-bars"></i>*@
+                            </div>
+                            <a href="@Url.Action("Index", "Projects")" class="small-box-footer"><b><i>View!</i></b> <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box" style="background-color: #ed6663; height:275px;color:white">
+                            <div class="inner">
+                                <h3>View Tickets</h3>
+                                <p>Views the Tickets that have been assigned to the Developer</p>
+                                <p>Example: once assigned, a Developer can now see the history and status of their assigned Tickets</p>
+
+                            </div>
+                            <div class="icon">
+                                @*<i class="ion ion-person-add"></i>*@
+                            </div>
+                            <a href="@Url.Action("Index", "Tickets")" class="small-box-footer"><b><i>View!</i></b> <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    @*<div class="col-lg-3 col-6">
+                            <div class="small-box" style="background-color: #ffa372; color:white">
+                                <div class="inner">
+                                    <h3>Assign Users</h3>
+                                    <p>Description</p>
+                                    <p>Description</p>
+
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-pie-graph"></i>
+                                </div>
+                                <a href="@Url.Action("ManageRoles", "Assignments")" class="small-box-footer">Assign! <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>*@
+                </div>
+            }
+            @if (User.IsInRole("Submitter"))
+            {
+                <div class="row">
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box" style="background-color:#4e89ae;height:275px; color:white">
+                            <div class="inner">
+
+                                <h3>Submitter</h3>
+                                <p>The submitter can create new Tickets and view the Tickets they have created</p>
+                                <p>They can also view Projects that their Tickets have been assigned to</p>
+
+                            </div>
+                            <div class="icon">
+                                @*<i class="ion ion-bag"></i>*@
+                            </div>
+                            @*<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>*@
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box" style="        background-color: #43658b;
+        height: 275px;
+        color: white">
+                            <div class="inner">
+                                <h3>View Tickets</h3>
+                                <p>Views the Tickets that have been submitted by the Submitter</p>
+                                <p>Example: once created, a Submitter can view the status of their submitted Tickets</p>
+                            </div>
+                            <div class="icon">
+                                @*<i class="ion ion-person-add"></i>*@
+                            </div>
+                            <a href="@Url.Action("Index", "Tickets")" class="small-box-footer"><b><i>View!</i></b> <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box" style="        background-color: #ed6663;
+        height: 275px;
+        color: white">
+                            <div class="inner">
+
+                                <h3>Create Tickets</h3>
+
+                                <p>Creates a new Ticket that describes a single issue needing to be addressed within a Project</p>
+                                <p>Example: an email subscription link was found not to be working correctly</p>
+
+                            </div>
+                            <div class="icon">
+                                @*<i class="ion ion-stats-bars"></i>*@
+                            </div>
+                            <a href="@Url.Action("Create", "Tickets")" class="small-box-footer"><b><i>Create!</i></b> <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box" style="background-color: #ffa372; height:275px;color:white">
+                            <div class="inner">
+                                <h3>View Projects</h3>
+                                <p>Views the Projects that have been submitted by the Submitter</p>
+                                <p>Example: once created, a Submitter can view only the Projects that they have created</p>
+
+                            </div>
+                            <div class="icon">
+                                @*<i class="ion ion-pie-graph"></i>*@
+                            </div>
+                            <a href="@Url.Action("Index", "Projects")" class="small-box-footer"><b><i>View!</i></b> <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            }
 
 
 
-    </div>
+        </div>
     </section>
 
 
     <hr />
 
-@*<div class="row">
-        <div class="col-1">
-            @if (User.Identity.IsAuthenticated)
-            {
-                <img src="@Model.AvatarPath" class="img-circle" />
-            }
-        </div>
-    </div>
-
-    <hr />*@
-
-
-
-
-
-@*<div class="container-fluid">
-    <div class="row">
-        <div class="col">
-            <div class="info-box">
-                 Apply any bg-* class to to the icon to color it 
-                <span class="info-box-icon bg-red"><i class="fas fa-fire"></i></span>
-                <div class="info-box-content">
-                    <span class="info-box-text">Projects</span>
-                    <span class="info-box-number">@Model.Projects.Count()</span>
-                </div>
-                 /.info-box-content 
+    @*<div class="row">
+            <div class="col-1">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <img src="@Model.AvatarPath" class="img-circle" />
+                }
             </div>
         </div>
-    </div>
-</div>*@
+
+        <hr />*@
 
 
 
 
 
-@*@using (Html.BeginForm("Create", "Projects", FormMethod.Post))
-{
-    @Html.AntiForgeryToken();
-    @Html.Hidden("url", Request.Url.GetComponents(UriComponents.PathAndQuery, UriFormat.SafeUnescaped))
+    @*<div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <div class="info-box">
+                         Apply any bg-* class to to the icon to color it
+                        <span class="info-box-icon bg-red"><i class="fas fa-fire"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Projects</span>
+                            <span class="info-box-number">@Model.Projects.Count()</span>
+                        </div>
+                         /.info-box-content
+                    </div>
+                </div>
+            </div>
+        </div>*@
 
-    <input type="text" name="Name" placeholder="Name" />
-    <input type="text" name="Description" placeholder="Description" />
-    <button type="submit">Submit</button>
-}*@
 
-@*<table id="table_id" class="table-bordered table bg-transparent dataTable">
-    <thead>
-        <tr style="font-size:22px; font-weight:500;">
-            <th>
-                Title
-            </th>
-            <th>
-                Description
-            </th>
-            <th>
-                Developer
-            </th>
-            <th>
-                Priority
-            </th>
-            <th>
-                Type
-            </th>
-            <th>
-                Status
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var ticket in Model.Tickets)
+
+
+
+    @*@using (Html.BeginForm("Create", "Projects", FormMethod.Post))
         {
-            <tr style="font-size:18px">
-                <td style="cursor:pointer" onclick="window.location.href='@Url.Action("Details","Tickets", new {ticket.Id })'">
-                    @ticket.Title
-                </td>
-                <td style="cursor:pointer" onclick="window.location.href='@Url.Action("Details","Tickets", new {ticket.Id })'">
-                    @ticket.Description
-                </td>
-                @if (ticket.Developer == null)
+            @Html.AntiForgeryToken();
+            @Html.Hidden("url", Request.Url.GetComponents(UriComponents.PathAndQuery, UriFormat.SafeUnescaped))
+
+            <input type="text" name="Name" placeholder="Name" />
+            <input type="text" name="Description" placeholder="Description" />
+            <button type="submit">Submit</button>
+        }*@
+
+    @*<table id="table_id" class="table-bordered table bg-transparent dataTable">
+            <thead>
+                <tr style="font-size:22px; font-weight:500;">
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        Developer
+                    </th>
+                    <th>
+                        Priority
+                    </th>
+                    <th>
+                        Type
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var ticket in Model.Tickets)
                 {
-                    <td>
-                        No Developer
-                    </td>
+                    <tr style="font-size:18px">
+                        <td style="cursor:pointer" onclick="window.location.href='@Url.Action("Details","Tickets", new {ticket.Id })'">
+                            @ticket.Title
+                        </td>
+                        <td style="cursor:pointer" onclick="window.location.href='@Url.Action("Details","Tickets", new {ticket.Id })'">
+                            @ticket.Description
+                        </td>
+                        @if (ticket.Developer == null)
+                        {
+                            <td>
+                                No Developer
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                @ticket.Developer.FullName
+                            </td>
+                        }
+                        <td>
+                            @if (ticket.TicketPriority.Name == "URGENT")
+                            {
+                                <span class="float-lg-right margPad bg-red">URGENT</span>
+                            }
+                            @if (ticket.TicketPriority.Name == "Low")
+                            {
+                                <span class="float-lg-right margPad bg-gradient-green">Low </span>
+                            }
+                            @if (ticket.TicketPriority.Name == "Medium")
+                            {
+                                <span class="float-lg-right margPad bg-gradient-yellow">Medium</span>
+                            }
+                            @if (ticket.TicketPriority.Name == "High")
+                            {
+                                <span class="float-lg-right margPad" style="background-color:#a10000; color:white">High </span>
+                            }
+                            @if (ticket.TicketPriority.Name == "On Hold")
+                            {
+                                <span class="float-lg-right margPad">On Hold</span>
+                            }
+                        </td>
+                        <td>
+                            @ticket.TicketType.Name
+                        </td>
+                        <td>
+                            @ticket.TicketStatus.Name
+                        </td>
+                    </tr>
                 }
-                else
-                {
-                    <td>
-                        @ticket.Developer.FullName
-                    </td>
-                }
-                <td>
-                    @if (ticket.TicketPriority.Name == "URGENT")
-                    {
-                        <span class="float-lg-right margPad bg-red">URGENT</span>
-                    }
-                    @if (ticket.TicketPriority.Name == "Low")
-                    {
-                        <span class="float-lg-right margPad bg-gradient-green">Low </span>
-                    }
-                    @if (ticket.TicketPriority.Name == "Medium")
-                    {
-                        <span class="float-lg-right margPad bg-gradient-yellow">Medium</span>
-                    }
-                    @if (ticket.TicketPriority.Name == "High")
-                    {
-                        <span class="float-lg-right margPad" style="background-color:#a10000; color:white">High </span>
-                    }
-                    @if (ticket.TicketPriority.Name == "On Hold")
-                    {
-                        <span class="float-lg-right margPad">On Hold</span>
-                    }
-                </td>
-                <td>
-                    @ticket.TicketType.Name
-                </td>
-                <td>
-                    @ticket.TicketStatus.Name
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>*@
+            </tbody>
+        </table>*@
 
 
 
 
-@*@if (User.IsInRole("Admin") || User.IsInRole("DemoAdmin") || User.IsInRole("ProjectManager") || User.IsInRole("DemoPM"))
-{
+    @*@if (User.IsInRole("Admin") || User.IsInRole("DemoAdmin") || User.IsInRole("ProjectManager") || User.IsInRole("DemoPM"))
+        {
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col">
+                        <div class="info-box">
+                             Apply any bg-* class to to the icon to color it
+                            <span class="info-box-icon bg-red"><i class="fas fa-fire"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">High Priority Tickets</span>
+                                <span class="info-box-number">@Model.HighPriorityTicketCount</span>
+                            </div>
+                             /.info-box-content
+                        </div>
+                    </div>
+                    <div class="col">
+                         /.info-box
+                        <div class="info-box">
+                             Apply any bg-* class to to the icon to color it
+                            <span class="info-box-icon bg-orange"><i class="fas fa-exclamation-triangle"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Unassigned Tickets</span>
+                                <span class="info-box-number">@Model.UnassignedTicketCount</span>
+                            </div>
+                             /.info-box-content
+                        </div>
+                    </div>
+                    <div class="col">
+                         /.info-box
+                        <div class="info-box">
+                             Apply any bg-* class to to the icon to color it
+                            <span class="info-box-icon bg-green"><i class="fas fa-check"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Resolved Tickets Last 7 days</span>
+                                <span class="info-box-number">@Model.RecentResolvedCount</span>
+                            </div>
+                             /.info-box-content
+                        </div>
+                         /.info-box
+                    </div>
+                </div>
+            </div>}
+        @if (User.IsInRole("Developer") || User.IsInRole("DemoDeveloper"))
+        {
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col">
+                        <div class="info-box">
+                             Apply any bg-* class to to the icon to color it
+                            <span class="info-box-icon bg-green"><i class="fas fa-book"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Active Projects</span>
+                                <span class="info-box-number">@Model.AssignedProjectCount</span>
+                            </div>
+                             /.info-box-content
+                        </div>
+                    </div>
+                    <div class="col">
+                         /.info-box
+                        <div class="info-box">
+                             Apply any bg-* class to to the icon to color it
+                            <span class="info-box-icon bg-orange"><i class="fas fa-tag"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Assigned Tickets</span>
+                                <span class="info-box-number">@Model.AssignedTicketCount</span>
+                            </div>
+                             /.info-box-content
+                        </div>
+                    </div>
+                    <div class="col">
+                         /.info-box
+                        <div class="info-box">
+                             Apply any bg-* class to to the icon to color it
+                            <span class="info-box-icon bg-red"><i class="fas fa-exclamation-circle"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">High Priority Tickets</span>
+                                <span class="info-box-number">@Model.HighPriorityTicketCount</span>
+                            </div>
+                             /.info-box-content
+                        </div>
+                         /.info-box
+                    </div>
+                </div>
+            </div>}
+        @if (User.IsInRole("Submitter") || User.IsInRole("DemoSubmitter"))
+        {
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col">
+                        <div class="info-box">
+                             Apply any bg-* class to to the icon to color it
+                            <span class="info-box-icon bg-green"><i class="fas fa-book"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Active Projects</span>
+                                <span class="info-box-number">@Model.AssignedProjectCount</span>
+                            </div>
+                             /.info-box-content
+                        </div>
+                    </div>
+                    <div class="col">
+                         /.info-box
+                        <div class="info-box">
+                             Apply any bg-* class to to the icon to color it
+                            <span class="info-box-icon bg-green"><i class="fas fa-tag"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Submitted Tickets</span>
+                                <span class="info-box-number">@Model.SubmittedTicketCount</span>
+                            </div>
+                             /.info-box-content
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }*@
+
+
+
+
     <div class="container-fluid">
         <div class="row">
             <div class="col">
-                <div class="info-box">
-                     Apply any bg-* class to to the icon to color it 
-                    <span class="info-box-icon bg-red"><i class="fas fa-fire"></i></span>
-                    <div class="info-box-content">
-                        <span class="info-box-text">High Priority Tickets</span>
-                        <span class="info-box-number">@Model.HighPriorityTicketCount</span>
-                    </div>
-                     /.info-box-content 
+                <h4 style="text-align:center">Tickets By <b>Priority</b></h4>
+                <div id="chart1">
                 </div>
             </div>
             <div class="col">
-                 /.info-box 
-                <div class="info-box">
-                     Apply any bg-* class to to the icon to color it 
-                    <span class="info-box-icon bg-orange"><i class="fas fa-exclamation-triangle"></i></span>
-                    <div class="info-box-content">
-                        <span class="info-box-text">Unassigned Tickets</span>
-                        <span class="info-box-number">@Model.UnassignedTicketCount</span>
-                    </div>
-                     /.info-box-content 
+                <h4 style="text-align:center">Tickets By <b>Status</b></h4>
+                <div id="chart2">
                 </div>
             </div>
             <div class="col">
-                 /.info-box 
-                <div class="info-box">
-                     Apply any bg-* class to to the icon to color it 
-                    <span class="info-box-icon bg-green"><i class="fas fa-check"></i></span>
-                    <div class="info-box-content">
-                        <span class="info-box-text">Resolved Tickets Last 7 days</span>
-                        <span class="info-box-number">@Model.RecentResolvedCount</span>
-                    </div>
-                     /.info-box-content 
-                </div>
-                 /.info-box 
-            </div>
-        </div>
-    </div>}
-@if (User.IsInRole("Developer") || User.IsInRole("DemoDeveloper"))
-{
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col">
-                <div class="info-box">
-                     Apply any bg-* class to to the icon to color it 
-                    <span class="info-box-icon bg-green"><i class="fas fa-book"></i></span>
-                    <div class="info-box-content">
-                        <span class="info-box-text">Active Projects</span>
-                        <span class="info-box-number">@Model.AssignedProjectCount</span>
-                    </div>
-                     /.info-box-content 
-                </div>
-            </div>
-            <div class="col">
-                 /.info-box 
-                <div class="info-box">
-                     Apply any bg-* class to to the icon to color it 
-                    <span class="info-box-icon bg-orange"><i class="fas fa-tag"></i></span>
-                    <div class="info-box-content">
-                        <span class="info-box-text">Assigned Tickets</span>
-                        <span class="info-box-number">@Model.AssignedTicketCount</span>
-                    </div>
-                     /.info-box-content 
-                </div>
-            </div>
-            <div class="col">
-                 /.info-box 
-                <div class="info-box">
-                     Apply any bg-* class to to the icon to color it 
-                    <span class="info-box-icon bg-red"><i class="fas fa-exclamation-circle"></i></span>
-                    <div class="info-box-content">
-                        <span class="info-box-text">High Priority Tickets</span>
-                        <span class="info-box-number">@Model.HighPriorityTicketCount</span>
-                    </div>
-                     /.info-box-content 
-                </div>
-                 /.info-box 
-            </div>
-        </div>
-    </div>}
-@if (User.IsInRole("Submitter") || User.IsInRole("DemoSubmitter"))
-{
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col">
-                <div class="info-box">
-                     Apply any bg-* class to to the icon to color it 
-                    <span class="info-box-icon bg-green"><i class="fas fa-book"></i></span>
-                    <div class="info-box-content">
-                        <span class="info-box-text">Active Projects</span>
-                        <span class="info-box-number">@Model.AssignedProjectCount</span>
-                    </div>
-                     /.info-box-content 
-                </div>
-            </div>
-            <div class="col">
-                 /.info-box 
-                <div class="info-box">
-                     Apply any bg-* class to to the icon to color it 
-                    <span class="info-box-icon bg-green"><i class="fas fa-tag"></i></span>
-                    <div class="info-box-content">
-                        <span class="info-box-text">Submitted Tickets</span>
-                        <span class="info-box-number">@Model.SubmittedTicketCount</span>
-                    </div>
-                     /.info-box-content 
+                <h4 style="text-align:center">Tickets By <b>Type</b></h4>
+                <div id="chart3">
                 </div>
             </div>
         </div>
     </div>
-}*@
-
-
-
-
-<div class="container-fluid">
-    <div class="row">
-        <div class="col">
-            <h4>Tickets By Priority</h4>
-            <div id="chart1">
-            </div>
-        </div>
-        <div class="col">
-            <h4>Tickets By Status</h4>
-            <div id="chart2">
-            </div>
-        </div>
-        <div class="col">
-            <h4>Tickets By Type</h4>
-            <div id="chart3">
-            </div>
-        </div>
-    </div>
-</div>
-
+</body>
 @*<section id="Ajax">
     <div class="row">
         <div id="priorityChart" class="col-md-4 chart"></div>
@@ -717,4 +725,3 @@
         });
     </script>
     }
-</section>

@@ -24,6 +24,12 @@
     <!-- Google Font: Source Sans Pro -->
     <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <style>
+        .login-page {
+            background-image: url('../../images/pexels-lukas-917463.jpg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
         .btn {
             transition-duration: 0.4s;
 /*            border: 1px solid lightgrey;
@@ -112,20 +118,33 @@
     </style>
 </head>
 <body class="hold-transition login-page">
+    <br />
+    <br />
     <div class="login-box">
-        <div class="login-logo">
-             <img src="~/Images/BugZapLogo.png" alt="BugZap JS Logo" class="brand-image"
-                                style="
+        <!-- /.login-logo -->
+        <div class="card">
+            @if (Request.IsAuthenticated)
+            {
+                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "sideLogoutForm", @class = "navbar-right" }))
+                {
+                    @Html.AntiForgeryToken()
+            <p style="text-align:center">
+                <a href="javascript:document.getElementById('sideLogoutForm').submit()" style="text-align:center; width:100%; font-size:x-small">( Remember to Log Out! )</a>
+            </p>
+                        }
+            }
+            <div class="login-logo">
+                <img src="~/Images/BugZapLogo.png" alt="BugZap JS Logo" class="brand-image"
+                     style="
                     opacity: .8;
                     border-radius: 15%;
                     display: block;
                     width: 25%;
                     display: inline-block;
                     margin-left: auto;
-                    /*margin-right: auto*/"> <b style="display: inline-block; margin-right: auto">BugZap</b>JS
-        </div>
-        <!-- /.login-logo -->
-        <div class="card">
+                    /*margin-right: auto*/">
+                <a style="display: inline-block; margin-right: auto; font-weight:900"><b>BugZap</b></a>JS
+            </div>
             <div class="card-body login-card-body">
                 @*<p class="login-box-msg">Sign in to start your session</p>*@
 
@@ -165,38 +184,44 @@
                             <div class="col-4">
                                 <button type="submit" class="btn btn-dark btn-block">Sign In</button>
                             </div>
+
                             <!-- /.col -->
                         </div>
+                        <br />
+                        <p class="btn btn-block" style="background-color: lightblue">
+                            @Html.ActionLink("Register as a new user", "Register")
+                        </p>
                     }
                 </section>
 
 
                 @*<div class="social-auth-links text-center mb-3">
-                    <p>- OR -</p>
-                    <a href="#" class="btn btn-block btn-primary">
-                        <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
-                    </a>
-                    <a href="#" class="btn btn-block btn-dark">
-                        <i class="fab fa-google-plus mr-2"></i> Sign in using Google
-                    </a>
-                </div>
-                 /.social-auth-links*@
+                <p>- OR -</p>
+                <a href="#" class="btn btn-block btn-primary">
+                    <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
+                </a>
+                <a href="#" class="btn btn-block btn-dark">
+                    <i class="fab fa-google-plus mr-2"></i> Sign in using Google
+                </a>
+            </div>
+             /.social-auth-links*@
 
-                <p class="mb-0">
-                    @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                </p>
-                <p class="mb-0">
-                    @Html.ActionLink("Register as a new user", "Register")
-                </p>
-                <p class="mb-0">
-                    @Html.ActionLink("Resend Email Confirmation", "ResendEmailConfirmation")
-                </p>
+                @*<p class="mb-0">
+                @Html.ActionLink("Forgot your password?", "ForgotPassword")
+            </p>*@
+                @*<p class="btn btn-outline-dark">
+                @Html.ActionLink("Register as a new user", "Register")
+            </p>*@
+
+                @*<p class="mb-0">
+                @Html.ActionLink("Resend Email Confirmation", "ResendEmailConfirmation")
+            </p>*@
             </div>
             <!-- /.login-card-body -->
         </div>
     </div>
     @*<center><i class="fas fa-puzzle-piece fa-3x"></i></center>*@
-    <div class="col-4" style="padding-left:30px; padding-right:30px">
+    <div class="login-card-body">
     @using (Html.BeginForm("DemoLogin", "Account", FormMethod.Post))
     {
         @Html.AntiForgeryToken();
